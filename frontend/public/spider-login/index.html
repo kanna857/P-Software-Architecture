@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebVerse | Login</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --red: #ff1738;
+    --dark-red: #8b0015;
+    --black: #030305;
+    --glass: rgba(10, 10, 15, .68);
+    --white: #f5f5f5;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #020204;
+    color: var(--white);
+    font-family: Poppins, sans-serif;
+}
+
+/* =========================================================
+   MAIN SCENE
+========================================================= */
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        url('bg.png') center center / cover no-repeat fixed;
+}
+
+/* Extra dark overlay so login card stays readable */
+.scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 70% 30%, rgba(120, 0, 18, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 80%, rgba(60, 0, 90, 0.35) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(2,2,5,0.38) 0%, rgba(2,2,5,0.52) 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Cinematic red light */
+
+.red-light {
+    position: absolute;
+    width: 55vw;
+    height: 55vw;
+    left: -20vw;
+    top: 5vh;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 0, 30, .18),
+        transparent 68%
+    );
+
+    filter: blur(20px);
+    animation: pulseLight 5s infinite alternate;
+}
+
+@keyframes pulseLight {
+    from {
+        transform: scale(.9);
+        opacity: .45;
+    }
+
+    to {
+        transform: scale(1.15);
+        opacity: .8;
+    }
+}
+
+/* =========================================================
+   MOON
+========================================================= */
+
+.moon {
+    position: absolute;
+    width: 190px;
+    height: 190px;
+
+    right: 13%;
+    top: 8%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #d8d8d8 45%,
+            #999 100%
+        );
+
+    box-shadow:
+        0 0 40px rgba(255,255,255,.18),
+        0 0 100px rgba(255,255,255,.08);
+
+    opacity: .8;
+}
+
+.moon::after {
+    content: "";
+
+    position: absolute;
+    inset: 15px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 20% 30%, #aaa 0 4%, transparent 5%),
+        radial-gradient(circle at 60% 20%, #aaa 0 5%, transparent 6%),
+        radial-gradient(circle at 70% 65%, #aaa 0 7%, transparent 8%),
+        radial-gradient(circle at 35% 70%, #aaa 0 4%, transparent 5%);
+
+    opacity: .3;
+}
+
+/* =========================================================
+   CITY
+========================================================= */
+
+
+/* =========================================================
+   ATMOSPHERE
+========================================================= */
+
+.fog {
+    position: absolute;
+    bottom: 20%;
+    left: -20%;
+
+    width: 140%;
+    height: 150px;
+
+    background: linear-gradient(
+        transparent,
+        rgba(100,100,110,.08),
+        transparent
+    );
+
+    filter: blur(20px);
+
+    animation: fogMove 14s linear infinite;
+}
+
+@keyframes fogMove {
+    from {
+        transform: translateX(-10%);
+    }
+
+    to {
+        transform: translateX(10%);
+    }
+}
+
+/* =========================================================
+   RAIN
+========================================================= */
+
+.rain {
+    position: absolute;
+    inset: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    background-image:
+        repeating-linear-gradient(
+            105deg,
+            transparent 0,
+            transparent 18px,
+            rgba(255,255,255,.12) 19px,
+            transparent 20px
+        );
+
+    background-size: 80px 120px;
+
+    animation: rain 0.5s linear infinite;
+}
+
+@keyframes rain {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 80px 120px;
+    }
+}
+
+/* =========================================================
+   WEB CORNER
+========================================================= */
+
+    width: 520px;
+    height: 520px;
+
+    left: -260px;
+    top: -260px;
+
+    border-radius: 50%;
+
+    opacity: .3;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            transparent 0,
+            transparent 35px,
+            rgba(255,255,255,.35) 36px,
+            transparent 38px
+        );
+
+    z-index: 6;
+}
+
+.web::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: 50%;
+
+    background:
+        repeating-conic-gradient(
+            from 0deg,
+            transparent 0deg 10deg,
+            rgba(255,255,255,.25) 11deg 12deg,
+            transparent 13deg 20deg
+        );
+}
+
+/* =========================================================
+   HERO CHARACTER (SPIDER-MAN UPSIDE DOWN)
+========================================================= */
+
+.hero-container {
+    position: absolute;
+    left: 11%;
+    top: 0;
+    width: 320px;
+    height: 100vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.hero-swing-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: top center;
+    perspective: 1000px;
+}
+
+.hero-container.intro-swing .hero-swing-inner {
+    animation: heroEntrance 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards,
+               heroSwing 5.5s ease-in-out 1.4s infinite alternate;
+}
+
+@keyframes heroEntrance {
+    0% {
+        transform: translateY(-110vh) rotate(-18deg);
+        opacity: 0;
+    }
+    65% {
+        transform: translateY(12px) rotate(6deg);
+        opacity: 1;
+    }
+    82% {
+        transform: translateY(-6px) rotate(-3deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes heroSwing {
+    0%   { transform: rotate(-3.5deg) translateY(0px); }
+    50%  { transform: rotate(3.5deg)  translateY(14px); }
+    100% { transform: rotate(-3.5deg) translateY(0px); }
+}
+
+.hero-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
+
+.spiderman-img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    object-fit: contain;
+    object-position: top center;
+    display: block;
+    filter: drop-shadow(0 0 22px rgba(255, 23, 56, 0.55)) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95));
+    transition: filter 0.3s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+}
+
+/* Red & Black Ambient Backlight */
+.hero-red-ambient {
+    position: absolute;
+    width: 280px;
+    height: 400px;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(255, 23, 56, 0.42) 0%, rgba(139, 0, 21, 0.22) 50%, transparent 75%);
+    border-radius: 50%;
+    filter: blur(38px);
+    z-index: -1;
+    animation: ambientPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes ambientPulse {
+    0% {
+        opacity: 0.5;
+        transform: translateX(-50%) scale(0.92);
+    }
+    100% {
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1.14);
+    }
+}
+
+/* Web Shooter Origin point (where web blasts out from upside-down hands) */
+.web-origin {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+}
+
+/* =========================================================
+   LOGIN PANEL
+========================================================= */
+
+.login-wrapper {
+    position: absolute;
+
+    right: 9%;
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        translateZ(0);
+
+    z-index: 20;
+
+    width: min(430px, 90vw);
+}
+
+/* =========================================================
+   IRON SPIDER LOGIN CARD & NANO-ARMOR STYLING
+========================================================= */
+
+.login-card {
+    position: relative;
+    padding: 46px 40px;
+    border-radius: 22px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 23, 56, 0.15) 0%, transparent 70%),
+        linear-gradient(150deg, rgba(22, 10, 16, 0.9), rgba(8, 5, 12, 0.96));
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    box-shadow:
+        0 0 0 1px rgba(255, 23, 56, 0.45),
+        0 0 0 3px rgba(10, 5, 10, 0.9),
+        0 0 0 4px rgba(255, 215, 0, 0.3),
+        0 25px 70px rgba(0, 0, 0, 0.95),
+        0 0 45px rgba(255, 23, 56, 0.35),
+        0 0 65px rgba(255, 215, 0, 0.2),
+        inset 0 0 30px rgba(255, 23, 56, 0.18);
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.login-card:hover {
+    border-color: rgba(255, 215, 0, 0.85);
+    box-shadow:
+        0 0 0 1px rgba(255, 23, 56, 0.7),
+        0 0 0 3px rgba(10, 5, 10, 0.95),
+        0 0 0 4px rgba(255, 215, 0, 0.6),
+        0 30px 85px rgba(0, 0, 0, 0.98),
+        0 0 60px rgba(255, 23, 56, 0.5),
+        0 0 90px rgba(255, 215, 0, 0.35),
+        inset 0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+/* Nanotech Armor Grid Pattern inside card */
+.nanotech-grid {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(255, 215, 0, 0.04) 1px, transparent 1px) 0 0 / 22px 22px,
+        linear-gradient(0deg, rgba(255, 23, 56, 0.04) 1px, transparent 1px) 0 0 / 22px 22px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.75;
+}
+
+/* Holographic Laser Diagnostic Scanner Line */
+.card-laser-scanner {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 23, 56, 0.7) 20%,
+        rgba(255, 215, 0, 1) 50%,
+        rgba(255, 23, 56, 0.7) 80%,
+        transparent 100%
+    );
+    box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.9),
+        0 0 25px rgba(255, 23, 56, 0.8);
+    pointer-events: none;
+    z-index: 6;
+    animation: laserScan 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes laserScan {
+    0%   { top: 2%; opacity: 0.2; }
+    15%  { opacity: 0.95; }
+    85%  { opacity: 0.95; }
+    100% { top: 96%; opacity: 0.2; }
+}
+
+/* Iron Spider System Status Bar */
+.iron-status-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Orbitron, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255, 215, 0, 0.9);
+    background: rgba(255, 23, 56, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 0 12px rgba(255, 23, 56, 0.25);
+}
+
+.status-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00ff66;
+    box-shadow: 0 0 10px #00ff66;
+    animation: statusPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes statusPulse {
+    0%   { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 15px #00ff66, 0 0 25px #00ff66; }
+}
+
+/* Iron Spider Armored Corner Brackets */
+.iron-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-color: rgba(255, 215, 0, 0.9);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 5;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.iron-corner.top-left     { top: 12px; left: 12px; border-width: 3px 0 0 3px; border-top-left-radius: 4px; }
+.iron-corner.top-right    { top: 12px; right: 12px; border-width: 3px 3px 0 0; border-top-right-radius: 4px; }
+.iron-corner.bottom-left  { bottom: 12px; left: 12px; border-width: 0 0 3px 3px; border-bottom-left-radius: 4px; }
+.iron-corner.bottom-right { bottom: 12px; right: 12px; border-width: 0 3px 3px 0; border-bottom-right-radius: 4px; }
+
+.login-card:hover .iron-corner {
+    border-color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Red edge */
+
+.login-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--red),
+        transparent
+    );
+
+    box-shadow: 0 0 25px var(--red);
+}
+
+/* Corner web */
+
+.card-web {
+    position: absolute;
+
+    right: -100px;
+    top: -100px;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            transparent 0,
+            transparent 25px,
+            rgba(255,255,255,.1) 26px,
+            transparent 28px
+        );
+
+    opacity: .3;
+}
+
+/* Logo */
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Rotating Logo Emblem */
+.logo-icon {
+    display: inline-flex;
+    width: 78px;
+    height: 78px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 23, 56, 0.35) 0%, rgba(15, 5, 10, 0.9) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.85);
+    box-shadow:
+        0 0 25px rgba(255, 23, 56, 0.6),
+        0 0 50px rgba(255, 215, 0, 0.45),
+        inset 0 0 18px rgba(255, 23, 56, 0.4);
+    cursor: pointer;
+    overflow: hidden;
+    padding: 3px;
+    animation: emblemRotate 14s linear infinite;
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+@keyframes emblemRotate {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.logo-icon:hover {
+    animation-play-state: paused;
+    border-color: #ffffff;
+    box-shadow:
+        0 0 40px rgba(255, 23, 56, 0.9),
+        0 0 75px rgba(255, 215, 0, 0.75),
+        inset 0 0 25px rgba(255, 23, 56, 0.6);
+}
+
+.emblem-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+    transition: filter 0.3s ease;
+}
+
+.logo-icon:hover .emblem-img {
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 20px rgba(255, 23, 56, 0.85));
+}
+
+h1 {
+    font-family: Orbitron, sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 23, 56, 0.8);
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #a0a0b0;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+/* =========================================================
+   INPUT FIELDS
+========================================================= */
+
+.field {
+    margin-bottom: 22px;
+}
+
+.field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #ffd700;
+    font-family: Orbitron, sans-serif;
+    margin-bottom: 9px;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-box input {
+    width: 100%;
+    height: 52px;
+    padding: 0 46px 0 18px;
+    background: rgba(4, 2, 8, 0.92);
+    border: 1.5px solid rgba(255, 215, 0, 0.35);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    letter-spacing: 1px;
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    transition: all 0.35s ease;
+}
+
+.input-box input::placeholder {
+    color: #666;
+}
+
+.input-box input:focus {
+    border-color: #ffd700;
+    box-shadow:
+        0 0 0 1px rgba(255, 23, 56, 0.8),
+        0 0 25px rgba(255, 215, 0, 0.65),
+        0 0 40px rgba(255, 23, 56, 0.4),
+        inset 0 0 15px rgba(255, 215, 0, 0.25);
+    background: rgba(14, 5, 12, 0.96);
+}
+
+/* Password button */
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    background: none;
+
+    color: #777;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.password-toggle:hover {
+    color: white;
+}
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.options {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin: 18px 0 25px;
+
+    font-size: 12px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #888;
+}
+
+.remember input {
+    accent-color: var(--red);
+}
+
+.options a {
+    color: #aaa;
+    text-decoration: none;
+}
+
+.options a:hover {
+    color: var(--red);
+}
+
+/* =========================================================
+   LOGIN BUTTON — WEB_BUTTON.PNG ASSET INTEGRATION
+========================================================= */
+
+.login-btn {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    background: url('web_button.png') center center / 100% 100% no-repeat;
+    box-shadow:
+        0 0 0 1.5px rgba(255, 215, 0, 0.7),
+        0 0 0 3px rgba(255, 23, 56, 0.6),
+        0 8px 35px rgba(255, 23, 56, 0.7);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.btn-text {
+    display: none;
+}
+
+.login-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.18) contrast(1.1);
+    box-shadow:
+        0 0 0 1.5px #ffd700,
+        0 0 0 3.5px rgba(255, 23, 56, 0.9),
+        0 14px 45px rgba(255, 23, 56, 0.95);
+}
+
+.login-btn:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* Hover shine sweep */
+.login-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -110%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        100deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%
+    );
+    transform: skewX(-18deg);
+    transition: 0.65s ease;
+    z-index: 2;
+}
+
+.login-btn:hover::after {
+    left: 145%;
+}
+
+.login-btn:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* =========================================================
+   SIGN UP
+========================================================= */
+
+.signup {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 12px;
+
+    margin-top: 25px;
+}
+
+.signup a {
+    color: var(--red);
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+/* =========================================================
+   WEB SHOOT
+========================================================= */
+
+.web-shot {
+    position: fixed;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, #ffffff 0%, #ff1738 50%, #ffffff 100%);
+    z-index: 1000;
+    transform-origin: left center;
+    box-shadow:
+        0 0 10px #ffffff,
+        0 0 22px rgba(255, 23, 56, 0.9),
+        0 0 35px rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    border-radius: 2px;
+    opacity: 0;
+}
+
+.web-shot.active {
+    opacity: 1;
+    animation: shoot 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes shoot {
+    from {
+        width: 0;
+    }
+    to {
+        width: var(--web-length, 60vw);
+    }
+}
+
+.login-btn.impact {
+    transform: scale(0.94) !important;
+    box-shadow: 0 0 30px rgba(255,23,56,0.9), 0 0 50px rgba(255,255,255,0.8) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* =========================================================
+   LOGIN SUCCESS
+========================================================= */
+
+.success {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 200;
+
+    background: rgba(0,0,0,.7);
+
+    backdrop-filter: blur(15px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: .5s;
+}
+
+.success.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.success-box {
+    width: 350px;
+
+    padding: 45px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background: rgba(15,15,20,.9);
+
+    border: 1px solid rgba(255,0,30,.5);
+
+    box-shadow:
+        0 0 80px rgba(255,0,30,.2);
+}
+
+.success-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 18px auto;
+    animation: successPop .6s ease;
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0) rotate(-20deg);
+    }
+
+    70% {
+        transform: scale(1.18) rotate(6deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.emblem-success-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.75)) drop-shadow(0 0 22px rgba(255, 23, 56, 0.8));
+}
+
+.success h2 {
+    font-family: Orbitron, sans-serif;
+
+    margin-bottom: 10px;
+}
+
+.success p {
+    color: #999;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   CINEMATIC MULTIVERSE INTRO TEASER
+========================================================= */
+
+.loading {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #020205;
+    z-index: 5000;
+    overflow: hidden;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s ease, filter 0.8s ease;
+}
+
+.loading.hide-intro {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(15px);
+    pointer-events: none;
+}
+
+/* Background animated web lattice */
+.intro-web-bg {
+    position: absolute;
+    inset: -50px;
+    background:
+        repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 40px, rgba(255, 23, 56, 0.08) 41px, transparent 43px),
+        repeating-conic-gradient(from 0deg, transparent 0deg 15deg, rgba(255, 23, 56, 0.05) 16deg 17deg, transparent 18deg 30deg);
+    opacity: 0.7;
+    animation: webRotate 40s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes webRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* HUD System Corners */
+.hud-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 23, 56, 0.6);
+    pointer-events: none;
+    z-index: 12;
+}
+
+.hud-corner.top-left { top: 25px; left: 25px; border-right: none; border-bottom: none; }
+.hud-corner.top-right { top: 25px; right: 25px; border-left: none; border-bottom: none; }
+.hud-corner.bottom-left { bottom: 25px; left: 25px; border-right: none; border-top: none; }
+.hud-corner.bottom-right { bottom: 25px; right: 25px; border-left: none; border-top: none; }
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+}
+
+.spider-logo-intro {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 215, 0, 0.75);
+    box-shadow: 0 0 25px rgba(255, 23, 56, 0.6), 0 0 50px rgba(255, 215, 0, 0.3);
+    overflow: hidden;
+    animation: logoPulse 1.2s ease-in-out infinite alternate;
+    padding: 3px;
+    background: radial-gradient(circle, rgba(255, 23, 56, 0.25) 0%, rgba(5, 3, 8, 0.9) 100%);
+}
+
+.emblem-intro-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+}
+
+@keyframes logoPulse {
+    0% { transform: scale(0.88) rotate(-5deg); box-shadow: 0 0 15px rgba(255, 23, 56, 0.4), 0 0 25px rgba(255, 215, 0, 0.2); }
+    100% { transform: scale(1.08) rotate(5deg); box-shadow: 0 0 40px rgba(255, 23, 56, 0.9), 0 0 65px rgba(255, 215, 0, 0.55); }
+}
+
+.loading-text {
+    position: relative;
+    font-family: Orbitron, sans-serif;
+    letter-spacing: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 23, 56, 0.9), 0 0 30px rgba(255, 23, 56, 0.6);
+    animation: glitchText 2s infinite;
+}
+
+@keyframes glitchText {
+    0%, 90%, 100% { transform: translate(0); text-shadow: 0 0 15px rgba(255, 23, 56, 0.9); }
+    92% { transform: translate(-2px, 1px); text-shadow: -2px 0 #00ffff, 2px 0 #ff0055; }
+    94% { transform: translate(2px, -1px); text-shadow: 2px 0 #00ffff, -2px 0 #ff0055; }
+    96% { transform: translate(-1px, -1px); text-shadow: -1px 0 #00ffff, 1px 0 #ff0055; }
+}
+
+.intro-subtext {
+    font-family: Poppins, sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: -6px;
+}
+
+.intro-progress-bar {
+    width: 260px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 14px rgba(255, 23, 56, 0.6);
+}
+
+.intro-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff1738, #ffffff, #ffd700);
+    animation: loadProgress 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes loadProgress {
+    to { width: 100%; }
+}
+
+/* =========================================================
+   VIDEO INTRO (plays before loading screen)
+========================================================= */
+
+.video-intro-wrap {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.video-intro-wrap.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.video-intro-wrap.hidden {
+    display: none;
+}
+
+.intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    cursor: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    animation: introCinematic 2.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes introCinematic {
+    0%   { transform: scale(1.12); filter: brightness(0) saturate(0); opacity: 0; }
+    8%   { opacity: 1; filter: brightness(1.4) saturate(0.2) contrast(1.3); }
+    40%  { filter: brightness(1.15) saturate(0.8) contrast(1.2); }
+    100% { transform: scale(1.0); filter: brightness(1.05) saturate(1.1) contrast(1.1); }
+}
+
+.intro-img-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.18) 3px, transparent 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+    animation: scanlineFlash 2.2s ease forwards;
+}
+
+@keyframes scanlineFlash {
+    0%   { opacity: 1; }
+    70%  { opacity: 0.5; }
+    100% { opacity: 0.2; }
+}
+
+.intro-img-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.88) 100%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Hide cursor during entire intro overlay */
+.loading, .loading * {
+    cursor: none !important;
+}
+
+/* Multiverse Fullscreen Teaser */
+.multiverse-teaser {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    background: #000000;
+}
+
+.multiverse-teaser.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.teaser-img {
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(1.02) contrast(1.15);
+    animation: teaserZoom 2.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes teaserZoom {
+    0% {
+        transform: scale(1.08) rotate(-0.5deg);
+        filter: brightness(1.3) contrast(1.25) saturate(1.2);
+    }
+    100% {
+        transform: scale(1.0) rotate(0deg);
+        filter: brightness(1.02) contrast(1.15) saturate(1.0);
+    }
+}
+
+.teaser-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 35%, rgba(2, 2, 5, 0.82) 85%);
+    box-shadow: inset 0 0 120px rgba(255, 23, 56, 0.45);
+    pointer-events: none;
+}
+
+.teaser-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.15) 3px, transparent 4px);
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.teaser-badge {
+    position: absolute;
+    bottom: 45px;
+    font-family: Orbitron, sans-serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: #ffffff;
+    background: rgba(255, 23, 56, 0.28);
+    border: 1px solid rgba(255, 23, 56, 0.65);
+    padding: 10px 26px;
+    border-radius: 30px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(255, 23, 56, 0.6);
+    animation: badgePulse 1.5s infinite alternate;
+}
+
+@keyframes badgePulse {
+    0% { transform: scale(0.96); box-shadow: 0 0 18px rgba(255,23,56,0.4); }
+    100% { transform: scale(1.04); box-shadow: 0 0 38px rgba(255,23,56,0.85); }
+}
+
+/* =========================================================
+   RESPONSIVE (DESKTOP, TABLET & MOBILE)
+========================================================= */
+
+@media(max-width: 1024px) {
+    .hero-container {
+        left: 2%;
+        width: 250px;
+    }
+    .spiderman-img {
+        max-width: 240px;
+    }
+    .hero-wrapper {
+        top: 0;
+    }
+    .login-wrapper {
+        right: 6%;
+    }
+}
+
+@media(max-width: 900px) {
+    .hero-container {
+        left: 3%;
+        width: 200px;
+        opacity: 0.9;
+    }
+    .spiderman-img {
+        max-width: 200px;
+    }
+    .hero-wrapper {
+        top: 0;
+    }
+    .login-wrapper {
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: min(420px, 92vw);
+    }
+    .moon {
+        right: 5%;
+    }
+}
+
+@media(max-width: 600px) {
+    .hero-container {
+        display: block;
+        left: 0;
+        top: 0;
+        width: 150px;
+        z-index: 6;
+    }
+    .spiderman-img {
+        max-width: 130px;
+        opacity: 0.85;
+        filter: drop-shadow(0 0 12px rgba(255, 23, 56, 0.5));
+    }
+    .hero-web-line {
+        height: 80px;
+    }
+    .hero-wrapper {
+        top: 75px;
+    }
+    .hero-red-ambient {
+        width: 140px;
+        height: 220px;
+    }
+    .login-card {
+        padding: 30px 22px;
+    }
+    h1 {
+        font-size: 23px;
+    }
+    .teaser-badge {
+        bottom: 22px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        padding: 8px 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="scene">
+
+    <!-- Cinematic Multiverse intro cutscene -->
+    <div class="loading" id="introOverlay">
+
+        <!-- ① VIDEO INTRO - plays first, no cursor -->
+        <div class="video-intro-wrap" id="videoIntroWrap">
+            <video
+                id="introVideo"
+                class="intro-video"
+                src="video_intro_clean.mp4"
+                muted
+                playsinline
+                preload="auto"
+            ></video>
+            <div class="intro-img-scanlines"></div>
+            <div class="intro-img-vignette"></div>
+        </div>
+
+        <div class="intro-web-bg"></div>
+
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+
+        <div class="loading-content" id="introContent">
+            <div class="spider-logo-intro">
+                <img src="spider_emblem.png" alt="Spider Emblem" class="emblem-intro-img">
+            </div>
+            <div class="loading-text">
+                INITIALIZING MULTIVERSE...
+            </div>
+            <div class="intro-subtext">CONNECTING DIMENSIONAL NODES</div>
+            <div class="intro-progress-bar">
+                <div class="intro-progress"></div>
+            </div>
+        </div>
+
+        <div class="multiverse-teaser" id="multiverseTeaser">
+            <img src="multiverse_intro.jpg" alt="Multiverse Spider-Man" class="teaser-img">
+            <div class="teaser-overlay"></div>
+            <div class="teaser-scanlines"></div>
+            <div class="teaser-badge">⚡ MULTIVERSE DETECTED // EARTH-616 SYNC</div>
+        </div>
+    </div>
+
+    <!-- Interactive Nanotech Spark Particles Canvas -->
+    <canvas id="nanotechCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+
+    <!-- Background -->
+    <div class="red-light"></div>
+
+    <div class="moon"></div>
+
+    <div class="web"></div>
+
+    <div class="fog"></div>
+
+    <div class="rain"></div>
+
+
+
+    <!-- =====================================================
+         HERO CHARACTER (SPIDER-MAN UPSIDE DOWN)
+    ====================================================== -->
+
+    <div class="hero-container intro-swing" id="heroContainer">
+        <div class="hero-swing-inner">
+            <div class="hero-wrapper" id="heroWrapper">
+                <div class="hero-red-ambient"></div>
+                <img src="spiderman.png" alt="Spider-Man" class="spiderman-img" id="spidermanImg">
+                <div class="web-origin" id="webOrigin"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- =====================================================
+         LOGIN
+    ====================================================== -->
+
+    <div class="login-wrapper">
+
+        <div class="login-card">
+
+            <!-- Laser Diagnostic Scanner -->
+            <div class="card-laser-scanner"></div>
+
+            <!-- Iron Spider Armored Corner Brackets -->
+            <div class="iron-corner top-left"></div>
+            <div class="iron-corner top-right"></div>
+            <div class="iron-corner bottom-left"></div>
+            <div class="iron-corner bottom-right"></div>
+            <div class="nanotech-grid"></div>
+
+            <div class="card-web"></div>
+
+            <div class="logo">
+                <div class="logo-hud-ring"></div>
+                <div class="logo-icon" id="logoIcon">
+                    <img src="spider_emblem.png" alt="Spider-Man Emblem" class="emblem-img">
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <div class="iron-status-bar">
+                    <span class="status-pulse"></span> SYSTEM ONLINE // SUIT SYNC: 100%
+                </div>
+            </div>
+
+            <h1>WEBVERSE</h1>
+
+            <p class="subtitle">
+                Your city needs a hero.
+            </p>
+
+
+            <form id="loginForm">
+
+                <div class="field">
+
+                    <label>
+                        SECRET IDENTITY
+                    </label>
+
+                    <div class="input-box">
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        ACCESS CODE
+                    </label>
+
+                    <div class="input-box">
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                        >
+                            ◉
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input type="checkbox">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginButton"
+                    aria-label="CONNECT TO THE WEB"
+                ></button>
+
+            </form>
+
+
+            <div class="signup">
+                New hero?
+                <a href="#">Create an identity</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     WEB SHOOT
+========================================================= -->
+
+<div class="web-shot" id="webShot"></div>
+
+
+<!-- =========================================================
+     SUCCESS
+========================================================= -->
+
+<div class="success" id="success">
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            <img src="spider_emblem.png" alt="Spider Emblem" class="emblem-success-img">
+        </div>
+
+        <h2>CONNECTED</h2>
+
+        <p>
+            Your web connection has been established.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS & MULTIVERSE INTRO TEASER (4 SECONDS)
+========================================================= */
+
+const introOverlay = document.getElementById("introOverlay");
+const introContent = document.getElementById("introContent");
+const multiverseTeaser = document.getElementById("multiverseTeaser");
+
+const heroContainer = document.getElementById("heroContainer");
+const heroWrapper = document.getElementById("heroWrapper");
+const spidermanImg = document.getElementById("spidermanImg");
+const webOrigin = document.getElementById("webOrigin");
+const ambientGlow = document.querySelector(".hero-red-ambient");
+
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+
+const form = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+
+const togglePassword = document.getElementById("togglePassword");
+const webShot = document.getElementById("webShot");
+const success = document.getElementById("success");
+
+/* =========================================================
+   INTRO SEQUENCE:
+   VIDEO (video_intro_clean.mp4) → MULTIVERSE TEASER (1s) → LOGIN
+========================================================= */
+
+const videoIntroWrap = document.getElementById("videoIntroWrap");
+const introVideo     = document.getElementById("introVideo");
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    function proceedToTeaser() {
+        if (proceedToTeaser._done) return;
+        proceedToTeaser._done = true;
+
+        // Fade out video
+        if (videoIntroWrap) {
+            videoIntroWrap.classList.add("fade-out");
+            setTimeout(() => videoIntroWrap.classList.add("hidden"), 500);
+        }
+
+        // STEP 2: Show multiverse teaser
+        setTimeout(() => {
+            if (introContent) introContent.style.opacity = "0";
+            if (multiverseTeaser) multiverseTeaser.classList.add("active");
+
+            // STEP 3: After 1s reveal login page
+            setTimeout(() => {
+                if (introOverlay) {
+                    introOverlay.classList.add("hide-intro");
+                    setTimeout(() => { introOverlay.style.display = "none"; }, 800);
+                }
+            }, 1000);
+        }, 500);
+    }
+
+    if (introVideo) {
+        // Play video
+        introVideo.play().catch(() => proceedToTeaser());
+
+        // When video ends naturally → go to teaser
+        introVideo.addEventListener("ended", proceedToTeaser);
+
+        // Safety: if video metadata loads, set a max-wait fallback
+        introVideo.addEventListener("loadedmetadata", () => {
+            const maxMs = Math.round((introVideo.duration || 4) * 1000) + 400;
+            setTimeout(proceedToTeaser, maxMs);
+        });
+
+        // Ultimate fallback in case video never loads at all
+        setTimeout(proceedToTeaser, 8000);
+    } else {
+        proceedToTeaser();
+    }
+
+});
+
+
+/* =========================================================
+   SUPER-SMOOTH DAMPED SPIDER-MAN MOVEMENT (SIMULTANEOUS X & Y)
+========================================================= */
+
+let mouseX = 0;
+let mouseY = 0;
+let currentX = 0;
+let currentY = 0;
+
+// Lerp targets and current positions for multi-axis movement
+let containerTargetX = 0;
+let containerTargetY = 0;
+let containerCurrentX = 0;
+let containerCurrentY = 0;
+
+function handleMove(event) {
+    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+    const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+
+    // Normalised mouse coordinates (-0.5 to +0.5)
+    mouseX = (clientX / window.innerWidth - 0.5);
+    mouseY = (clientY / window.innerHeight - 0.5);
+
+    // Multi-axis target offsets
+    containerTargetX = mouseX * window.innerWidth * 0.22;
+    containerTargetY = mouseY * window.innerHeight * 0.16;
+}
+
+document.addEventListener("mousemove", handleMove);
+document.addEventListener("touchmove", handleMove, { passive: true });
+
+function renderParallax() {
+    // Ultra-smooth exponential damping lerp (0.045 for heavy, fluid momentum)
+    currentX += (mouseX - currentX) * 0.045;
+    currentY += (mouseY - currentY) * 0.045;
+
+    containerCurrentX += (containerTargetX - containerCurrentX) * 0.045;
+    containerCurrentY += (containerTargetY - containerCurrentY) * 0.045;
+
+    /* --- Move the Spider-Man container SIMULTANEOUSLY in X and Y with GPU acceleration --- */
+    if (heroContainer) {
+        heroContainer.style.transform =
+            `translate3d(${containerCurrentX.toFixed(2)}px, ${containerCurrentY.toFixed(2)}px, 0px)`;
+    }
+
+    /* --- Silky-smooth 3D swing tilt & momentum scaling --- */
+    if (heroWrapper) {
+        const rotateY = currentX * 24;
+        const rotateX = currentY * -16;
+        const rotateZ = currentX * 7;
+        const scaleEffect = 1 + Math.abs(currentY) * 0.05;
+
+        heroWrapper.style.transform = `
+            translateX(-50%)
+            rotateY(${rotateY.toFixed(2)}deg)
+            rotateX(${rotateX.toFixed(2)}deg)
+            rotateZ(${rotateZ.toFixed(2)}deg)
+            scale(${scaleEffect.toFixed(3)})
+        `;
+
+        if (ambientGlow) {
+            ambientGlow.style.transform = `
+                translateX(-50%)
+                translate3d(${(currentX * 18).toFixed(2)}px, ${(currentY * 14).toFixed(2)}px, 0px)
+                scale(${(1 + Math.abs(currentX) * 0.22 + Math.abs(currentY) * 0.12).toFixed(3)})
+            `;
+        }
+    }
+
+    requestAnimationFrame(renderParallax);
+}
+
+renderParallax();
+
+
+/* =========================================================
+   INTERACTIVE NANOTECH PARTICLE CANVAS SYSTEM
+========================================================= */
+
+(function initNanotechCanvas() {
+    const canvas = document.getElementById("nanotechCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const particles = [];
+    const numParticles = 45;
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.size = Math.random() * 2.5 + 1.2;
+            this.color = Math.random() > 0.4 ? "#ffd700" : "#ff1738";
+            this.alpha = Math.random() * 0.6 + 0.2;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 10;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connections between close particles
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 110) {
+                    ctx.save();
+                    ctx.globalAlpha = (1 - dist / 110) * 0.25;
+                    ctx.strokeStyle = "#ff1738";
+                    ctx.lineWidth = 0.6;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+})();
+
+
+/* =========================================================
+   SUIT LIGHTING ON INPUT FOCUS
+========================================================= */
+
+[username, password].forEach(input => {
+    input.addEventListener("focus", () => {
+        if (ambientGlow) {
+            ambientGlow.style.opacity = "0.95";
+            ambientGlow.style.filter = "blur(25px)";
+        }
+        if (spidermanImg) {
+            spidermanImg.style.filter = "drop-shadow(0 0 30px rgba(255, 23, 56, 0.85)) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95))";
+        }
+    });
+
+    input.addEventListener("blur", () => {
+        if (ambientGlow) {
+            ambientGlow.style.opacity = "";
+            ambientGlow.style.filter = "";
+        }
+        if (spidermanImg) {
+            spidermanImg.style.filter = "";
+        }
+    });
+});
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+togglePassword.addEventListener("click", () => {
+    if (password.type === "password") {
+        password.type = "text";
+        togglePassword.textContent = "◉";
+    } else {
+        password.type = "password";
+        togglePassword.textContent = "◎";
+    }
+});
+
+
+/* =========================================================
+   WEB SHOOT DIRECTLY TO LOGIN BUTTON
+========================================================= */
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (username.value.trim() === "" || password.value.trim() === "") {
+        return;
+    }
+
+    // Get origin coordinates from Spider-Man's wrist/hand position
+    const originRect = webOrigin ? webOrigin.getBoundingClientRect() : heroContainer.getBoundingClientRect();
+    const buttonRect = loginButton.getBoundingClientRect();
+
+    const startX = originRect.left + originRect.width / 2;
+    const startY = originRect.top + originRect.height / 2;
+
+    const endX = buttonRect.left + buttonRect.width / 2;
+    const endY = buttonRect.top + buttonRect.height / 2;
+
+    const dx = endX - startX;
+    const dy = endY - startY;
+
+    const length = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+    webShot.style.setProperty("--web-length", `${length}px`);
+    webShot.style.left = `${startX}px`;
+    webShot.style.top = `${startY}px`;
+    webShot.style.transform = `rotate(${angle}deg)`;
+
+    // Flare Spider-Man suit lighting during web shot
+    if (spidermanImg) {
+        spidermanImg.style.filter = "drop-shadow(0 0 40px rgba(255, 23, 56, 1)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.8))";
+    }
+
+    webShot.classList.remove("active");
+    void webShot.offsetWidth; // Force reflow
+    webShot.classList.add("active");
+
+    // Button impact recoil effect
+    setTimeout(() => {
+        loginButton.classList.add("impact");
+        setTimeout(() => {
+            loginButton.classList.remove("impact");
+        }, 200);
+    }, 380);
+
+    // Show login success screen
+    setTimeout(() => {
+        success.classList.add("active");
+    }, 750);
+
+    // Reset web shot flare after completion
+    setTimeout(() => {
+        webShot.classList.remove("active");
+        if (spidermanImg) {
+            spidermanImg.style.filter = "";
+        }
+    }, 1500);
+});
+
+
+/* =========================================================
+   CLICK OUTSIDE SUCCESS
+========================================================= */
+
+success.addEventListener("click", () => {
+
+    success.classList.remove("active");
+
+});
+
+
+/* =========================================================
+   RANDOM CITY LIGHTS
+========================================================= */
+
+const windows =
+    document.querySelectorAll(".windows");
+
+setInterval(() => {
+
+    const random =
+        Math.floor(
+            Math.random() * windows.length
+        );
+
+    const windowElement =
+        windows[random];
+
+    windowElement.style.opacity =
+        ".6";
+
+
+    setTimeout(() => {
+
+        windowElement.style.opacity =
+            ".18";
+
+    }, 500);
+
+}, 700);
+
+</script>
+
+</body>
+</html>
