@@ -44,7 +44,8 @@
   --glow-indigo: 0 0 40px rgba(255, 23, 56, 0.4);
   --glow-cyan: 0 0 30px rgba(255, 23, 56, 0.3);
 
-  --font-sans: 'Orbitron', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Orbitron', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
@@ -68,6 +69,10 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* ============================================================

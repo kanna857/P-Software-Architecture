@@ -216,6 +216,8 @@ body {
    WEB CORNER
 ========================================================= */
 
+.web {
+    position: absolute;
     width: 520px;
     height: 520px;
 
@@ -330,7 +332,6 @@ body {
     transition: filter 0.3s ease;
     user-select: none;
     -webkit-user-drag: none;
-}
 }
 
 /* Red & Black Ambient Backlight */
@@ -1628,13 +1629,13 @@ window.addEventListener("DOMContentLoaded", () => {
             if (introContent) introContent.style.opacity = "0";
             if (multiverseTeaser) multiverseTeaser.classList.add("active");
 
-            // STEP 3: After 1s reveal login page
+            // STEP 3: After 4s reveal login page
             setTimeout(() => {
                 if (introOverlay) {
                     introOverlay.classList.add("hide-intro");
                     setTimeout(() => { introOverlay.style.display = "none"; }, 800);
                 }
-            }, 1000);
+            }, 4000);
         }, 500);
     }
 
@@ -1754,6 +1755,13 @@ renderParallax();
     const particles = [];
     const numParticles = 45;
 
+    // Track mouse for advanced UX
+    const mouse = { x: null, y: null };
+    window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
     class Particle {
         constructor() {
             this.reset();
@@ -1795,6 +1803,18 @@ renderParallax();
 
         // Draw connections between close particles
         for (let i = 0; i < particles.length; i++) {
+            // Mouse interaction for particles
+            if (mouse.x !== null && mouse.y !== null) {
+                const mx = particles[i].x - mouse.x;
+                const my = particles[i].y - mouse.y;
+                const mDist = Math.sqrt(mx * mx + my * my);
+                if (mDist < 160) {
+                    // Push particles slightly away and attract them in a swirling motion
+                    particles[i].x += mx * 0.015;
+                    particles[i].y += my * 0.015;
+                }
+            }
+
             particles[i].update();
             particles[i].draw();
 
@@ -1823,8 +1843,29 @@ renderParallax();
 
 
 /* =========================================================
-   SUIT LIGHTING ON INPUT FOCUS
+   ADVANCED 3D TILT ON LOGIN CARD & SUIT LIGHTING
 ========================================================= */
+
+const loginCard = document.querySelector(".login-card");
+
+document.addEventListener("mousemove", (e) => {
+    if (!loginCard) return;
+    const rect = loginCard.getBoundingClientRect();
+    
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Smooth 3D tilt based on mouse position
+    if (x > -100 && x < rect.width + 100 && y > -100 && y < rect.height + 100) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const tiltX = -(y - centerY) / 25;
+        const tiltY = (x - centerX) / 25;
+        loginCard.style.transform = `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+    } else {
+        loginCard.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    }
+});
 
 [username, password].forEach(input => {
     input.addEventListener("focus", () => {
@@ -1989,6 +2030,8 @@ const windows =
 
 setInterval(() => {
 
+    if (windows.length === 0) return;
+
     const random =
         Math.floor(
             Math.random() * windows.length
@@ -1996,17 +2039,19 @@ setInterval(() => {
 
     const windowElement =
         windows[random];
-
-    windowElement.style.opacity =
-        ".6";
-
-
-    setTimeout(() => {
-
+        
+    if (windowElement) {
         windowElement.style.opacity =
-            ".18";
+            ".6";
 
-    }, 500);
+
+        setTimeout(() => {
+
+            windowElement.style.opacity =
+                ".18";
+
+        }, 500);
+    }
 
 }, 700);
 

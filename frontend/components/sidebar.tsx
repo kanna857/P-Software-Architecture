@@ -5,7 +5,7 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
   LayoutDashboard, PlusCircle, FolderGit2, Compass, Layers,
   Settings, Database, ShieldCheck, Cpu, TrendingUp, FileCode,
-  GitBranch, DollarSign, Activity, Zap, ChevronRight
+  GitBranch, DollarSign, Activity, Zap, ChevronRight, LogOut
 } from "lucide-react";
 
 interface SidebarProps {
@@ -15,21 +15,21 @@ interface SidebarProps {
 }
 
 const workspaceItems = [
-  { id: "dashboard",        label: "Dashboard",           icon: LayoutDashboard,  color: "text-red-400" },
-  { id: "new-architecture", label: "New Architecture",    icon: PlusCircle,       color: "text-red-400" },
-  { id: "projects",         label: "Projects",            icon: FolderGit2,       color: "text-sky-400" },
-  { id: "architectures",    label: "Architectures",       icon: Layers,           color: "text-red-300" },
-  { id: "versions",         label: "Architecture Versions", icon: GitBranch,      color: "text-red-400" },
-  { id: "agent-runs",       label: "Agent Runs",          icon: Cpu,              color: "text-red-400" },
+  { id: "dashboard",        label: "Dashboard",           icon: LayoutDashboard,  color: "text-slate-400" },
+  { id: "new-architecture", label: "New Architecture",    icon: PlusCircle,       color: "text-slate-400" },
+  { id: "projects",         label: "Projects",            icon: FolderGit2,       color: "text-slate-400" },
+  { id: "architectures",    label: "Architectures",       icon: Layers,           color: "text-slate-400" },
+  { id: "versions",         label: "Architecture Versions", icon: GitBranch,      color: "text-slate-400" },
+  { id: "agent-runs",       label: "Agent Runs",          icon: Cpu,              color: "text-slate-400" },
 ];
 
 const knowledgeItems = [
-  { id: "knowledge",        label: "Knowledge Base",      icon: Database,         color: "text-emerald-400" },
-  { id: "integrations",     label: "Integrations",        icon: Compass,          color: "text-sky-400" },
-  { id: "cost-analysis",    label: "Cost Analysis",       icon: DollarSign,       color: "text-amber-400" },
-  { id: "scale-simulation", label: "Scale Simulation",    icon: TrendingUp,       color: "text-red-400" },
-  { id: "security",         label: "Security",            icon: ShieldCheck,      color: "text-rose-400" },
-  { id: "observability",    label: "Observability",       icon: Activity,         color: "text-red-400" },
+  { id: "knowledge",        label: "Knowledge Base",      icon: Database,         color: "text-slate-400" },
+  { id: "integrations",     label: "Integrations",        icon: Compass,          color: "text-slate-400" },
+  { id: "cost-analysis",    label: "Cost Analysis",       icon: DollarSign,       color: "text-slate-400" },
+  { id: "scale-simulation", label: "Scale Simulation",    icon: TrendingUp,       color: "text-slate-400" },
+  { id: "security",         label: "Security",            icon: ShieldCheck,      color: "text-slate-400" },
+  { id: "observability",    label: "Observability",       icon: Activity,         color: "text-slate-400" },
   { id: "settings",         label: "Settings",            icon: Settings,         color: "text-slate-400" },
 ];
 
@@ -76,9 +76,9 @@ function NavItem({
             layoutId="activeNav"
             className="absolute inset-0 rounded-xl"
             style={{
-              background: "linear-gradient(135deg, rgba(79,70,229,0.4) 0%, rgba(255,23,56,0.2) 100%)",
-              border: "1px solid rgba(255,23,56,0.3)",
-              boxShadow: "0 0 20px rgba(255,23,56,0.15)",
+              background: "linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(79, 70, 229, 0.15) 100%)",
+              border: "1px solid rgba(56, 189, 248, 0.3)",
+              boxShadow: "0 0 15px rgba(56, 189, 248, 0.15)",
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -97,8 +97,8 @@ function NavItem({
         />
       )}
 
-      <Icon size={16} className={`relative z-10 shrink-0 ${isActive ? "text-red-300" : item.color} transition-colors`} />
-      <span className="relative z-10 truncate">{item.label}</span>
+      <Icon size={16} className={`relative z-10 shrink-0 ${isActive ? "text-sky-400" : item.color} transition-colors`} />
+      <span className="relative z-10 truncate font-semibold tracking-wide">{item.label}</span>
 
       {isActive && (
         <motion.div
@@ -107,7 +107,7 @@ function NavItem({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <ChevronRight size={12} className="text-red-400" />
+          <ChevronRight size={14} className="text-sky-400" />
         </motion.div>
       )}
     </motion.button>
@@ -115,6 +115,11 @@ function NavItem({
 }
 
 export default function Sidebar({ currentView, onViewChange, selectedProjectName }: SidebarProps) {
+  const handleLogout = () => {
+    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = "/login";
+  };
+
   return (
     <motion.aside
       initial={{ x: -280, opacity: 0 }}
@@ -139,24 +144,24 @@ export default function Sidebar({ currentView, onViewChange, selectedProjectName
           <div className="relative">
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="w-9 h-9 rounded-xl flex items-center justify-center"
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, #cc0022 0%, #7c3aed 50%, #2563eb 100%)",
-                boxShadow: "0 0 20px rgba(255,23,56,0.4)",
+                background: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #8b5cf6 100%)",
+                boxShadow: "0 0 25px rgba(14, 165, 233, 0.5)",
               }}
             >
-              <Layers size={18} className="text-white" />
+              <Layers size={20} className="text-white" />
             </motion.div>
             {/* Pulse ring */}
-            <span className="absolute inset-0 rounded-xl animate-ping opacity-20"
-              style={{ background: "rgba(255,23,56,0.3)" }} />
+            <span className="absolute inset-0 rounded-xl animate-ping opacity-30"
+              style={{ background: "rgba(14, 165, 233, 0.4)" }} />
           </div>
           <div>
-            <h1 className="font-bold text-base text-white tracking-tight leading-none">
-              Architect <span className="gradient-text-indigo">2.0</span>
+            <h1 className="font-bold text-lg text-white tracking-tight leading-none" style={{ fontFamily: "var(--font-heading)" }}>
+              Architect <span className="text-sky-400">2.0</span>
             </h1>
-            <div className="flex items-center gap-1.5 mt-1">
+            <div className="flex items-center gap-1.5 mt-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[10px] text-emerald-400 font-semibold tracking-widest uppercase">
                 DeepMind Core
@@ -244,6 +249,20 @@ export default function Sidebar({ currentView, onViewChange, selectedProjectName
               />
             ))}
           </div>
+        </div>
+
+        {/* Log Out */}
+        <div className="mt-6 pt-4 border-t border-slate-800/50">
+          <motion.button
+            variants={itemVariants}
+            whileHover={{ x: 3 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors duration-200"
+          >
+            <LogOut size={16} className="shrink-0" />
+            <span className="font-semibold tracking-wide">Log Out</span>
+          </motion.button>
         </div>
       </motion.nav>
 
