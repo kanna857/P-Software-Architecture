@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
-  LayoutDashboard, PlusCircle, FolderGit2, Compass, Layers,
-  Settings, Database, ShieldCheck, Cpu, TrendingUp, FileCode,
-  GitBranch, DollarSign, Activity, Zap, ChevronRight, LogOut
+  LayoutDashboard, PlusCircle, FolderOpen, Layers, GitBranch, Cpu,
+  Database, Cable, DollarSign, TrendingUp, Shield, Activity,
+  Settings, LogOut, ChevronRight, Spider, CloudRain, Bug
 } from "lucide-react";
 
 interface SidebarProps {
@@ -14,283 +14,217 @@ interface SidebarProps {
   selectedProjectName?: string;
 }
 
-const workspaceItems = [
-  { id: "dashboard",        label: "Dashboard",           icon: LayoutDashboard,  color: "text-slate-400" },
-  { id: "new-architecture", label: "New Architecture",    icon: PlusCircle,       color: "text-slate-400" },
-  { id: "projects",         label: "Projects",            icon: FolderGit2,       color: "text-slate-400" },
-  { id: "architectures",    label: "Architectures",       icon: Layers,           color: "text-slate-400" },
-  { id: "versions",         label: "Architecture Versions", icon: GitBranch,      color: "text-slate-400" },
-  { id: "agent-runs",       label: "Agent Runs",          icon: Cpu,              color: "text-slate-400" },
-];
-
-const knowledgeItems = [
-  { id: "knowledge",        label: "Knowledge Base",      icon: Database,         color: "text-slate-400" },
-  { id: "integrations",     label: "Integrations",        icon: Compass,          color: "text-slate-400" },
-  { id: "cost-analysis",    label: "Cost Analysis",       icon: DollarSign,       color: "text-slate-400" },
-  { id: "scale-simulation", label: "Scale Simulation",    icon: TrendingUp,       color: "text-slate-400" },
-  { id: "security",         label: "Security",            icon: ShieldCheck,      color: "text-slate-400" },
-  { id: "observability",    label: "Observability",       icon: Activity,         color: "text-slate-400" },
-  { id: "settings",         label: "Settings",            icon: Settings,         color: "text-slate-400" },
-];
-
-const sidebarVariants: Variants = {
-  hidden: { x: -20, opacity: 0 },
-  visible: {
-    x: 0, opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0.1 }
+const navGroups = [
+  {
+    label: null,
+    items: [
+      { id: "dashboard",          label: "Dashboard",             icon: LayoutDashboard },
+      { id: "new-architecture",   label: "New Architecture",      icon: PlusCircle },
+      { id: "projects",           label: "Projects",              icon: FolderOpen },
+      { id: "architectures",      label: "Architectures",         icon: Layers },
+      { id: "versions",           label: "Architecture Versions", icon: GitBranch },
+      { id: "agent-runs",         label: "Agent Runs",            icon: Cpu },
+    ]
+  },
+  {
+    label: "KNOWLEDGE BASE",
+    items: [
+      { id: "knowledge",          label: "Knowledge Base",        icon: Database },
+      { id: "integrations",       label: "Integrations",          icon: Cable },
+      { id: "cost-analysis",      label: "Cost Analysis",         icon: DollarSign },
+      { id: "scale-simulation",   label: "Scale Simulation",      icon: TrendingUp },
+      { id: "security",           label: "Security",              icon: Shield },
+      { id: "observability",      label: "Observability",         icon: Activity },
+    ]
+  },
+  {
+    label: "SYSTEM",
+    items: [
+      { id: "settings",           label: "Settings",              icon: Settings },
+      { id: "logout",             label: "Log Out",               icon: LogOut },
+    ]
   }
-};
+];
 
 const itemVariants: Variants = {
-  hidden:  { x: -12, opacity: 0 },
-  visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 400, damping: 30 } }
+  hidden:  { x: -10, opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 500, damping: 35 } }
 };
 
-function NavItem({
-  item, isActive, onClick
-}: {
-  item: typeof workspaceItems[0];
-  isActive: boolean;
-  onClick: () => void;
-}) {
+function NavItem({ item, isActive, onClick }: { item: any; isActive: boolean; onClick: () => void }) {
   const Icon = item.icon;
   return (
     <motion.button
       variants={itemVariants}
       onClick={onClick}
-      whileHover={{ x: 3 }}
+      whileHover={{ x: 2 }}
       whileTap={{ scale: 0.97 }}
-      className={`
-        w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
-        relative overflow-hidden transition-colors duration-200
-        ${isActive
-          ? "text-white"
-          : "text-slate-400 hover:text-slate-200"
-        }
-      `}
+      className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-xs font-semibold relative overflow-hidden group transition-colors duration-150"
+      style={{
+        color: isActive ? "#ffffff" : "#6b7280",
+        background: isActive ? "rgba(180, 0, 40, 0.15)" : "transparent",
+        border: isActive ? "1px solid rgba(200, 0, 50, 0.3)" : "1px solid transparent",
+      }}
     >
-      {/* Active background */}
-      <AnimatePresence>
-        {isActive && (
-          <motion.div
-            layoutId="activeNav"
-            className="absolute inset-0 rounded-xl"
-            style={{
-              background: "linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(79, 70, 229, 0.15) 100%)",
-              border: "1px solid rgba(56, 189, 248, 0.3)",
-              boxShadow: "0 0 15px rgba(56, 189, 248, 0.15)",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", stiffness: 500, damping: 40 }}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Hover background */}
-      {!isActive && (
-        <motion.div
-          className="absolute inset-0 rounded-xl bg-white/[0.03] opacity-0"
-          whileHover={{ opacity: 1 }}
-          transition={{ duration: 0.15 }}
-        />
-      )}
-
-      <Icon size={16} className={`relative z-10 shrink-0 ${isActive ? "text-sky-400" : item.color} transition-colors`} />
-      <span className="relative z-10 truncate font-semibold tracking-wide">{item.label}</span>
-
+      {/* Active left bar */}
       {isActive && (
-        <motion.div
-          className="absolute right-3 top-1/2 -translate-y-1/2"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-        >
-          <ChevronRight size={14} className="text-sky-400" />
-        </motion.div>
+        <div className="absolute left-0 top-1 bottom-1 w-0.5 rounded-full"
+          style={{ background: "linear-gradient(180deg, transparent, #ff0040, transparent)", boxShadow: "0 0 6px #ff0040" }} />
       )}
+
+      {/* Hover bg */}
+      {!isActive && (
+        <div className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ background: "rgba(255, 0, 40, 0.06)" }} />
+      )}
+
+      <Icon size={14} className="relative z-10 shrink-0" style={{ color: isActive ? "#ff2050" : "inherit" }} />
+      <span className="relative z-10 flex-1 text-left tracking-wide">{item.label}</span>
+      {isActive && <ChevronRight size={12} className="relative z-10 text-red-500 shrink-0" />}
     </motion.button>
   );
 }
 
-export default function Sidebar({ currentView, onViewChange, selectedProjectName }: SidebarProps) {
-  const handleLogout = () => {
-    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/login";
+export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
+  const isItemActive = (id: string) => {
+    if (currentView === id) return true;
+    if (id === "projects" && currentView.startsWith("project-")) return true;
+    return false;
   };
 
   return (
     <motion.aside
-      initial={{ x: -280, opacity: 0 }}
+      initial={{ x: -270, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 300, damping: 35 }}
-      className="w-64 flex flex-col h-screen sticky top-0 z-40"
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="w-56 flex flex-col h-screen sticky top-0 z-40 relative"
       style={{
-        background: "rgba(5, 11, 20, 0.92)",
-        backdropFilter: "blur(24px) saturate(1.5)",
-        borderRight: "1px solid rgba(255,23,56,0.1)",
+        background: "rgba(2, 0, 8, 0.55)",
+        backdropFilter: "blur(20px)",
+        borderRight: "1px solid rgba(255,215,0,0.2)",
+        boxShadow: "4px 0 30px rgba(0, 0, 0, 0.6), inset -1px 0 0 rgba(255,215,0,0.08)"
       }}
     >
-      {/* Brand */}
-      <div className="p-5 border-b border-red-500/10">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center gap-3"
-        >
-          {/* Logo mark */}
-          <div className="relative">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #8b5cf6 100%)",
-                boxShadow: "0 0 25px rgba(14, 165, 233, 0.5)",
-              }}
-            >
-              <Layers size={20} className="text-white" />
-            </motion.div>
-            {/* Pulse ring */}
-            <span className="absolute inset-0 rounded-xl animate-ping opacity-30"
-              style={{ background: "rgba(14, 165, 233, 0.4)" }} />
+      {/* Subtle top edge glow */}
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(200,0,50,0.5), transparent)" }} />
+
+      {/* BRAND */}
+      <div className="px-4 py-4 flex items-center gap-3 border-b" style={{ borderColor: "rgba(255,215,0,0.2)" }}>
+        {/* Rotating Iron Spider emblem — matches login page logo */}
+        <div className="w-10 h-10 rounded-full flex items-center justify-center relative overflow-hidden shrink-0 animate-emblem-rotate"
+          style={{
+            background: "radial-gradient(circle, rgba(255,23,56,0.35) 0%, rgba(15,5,10,0.9) 100%)",
+            border: "2px solid rgba(255,215,0,0.85)",
+            boxShadow: "0 0 18px rgba(255,23,56,0.6), 0 0 35px rgba(255,215,0,0.35), inset 0 0 12px rgba(255,23,56,0.35)",
+            padding: "2px"
+          }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/spider-login/spider_emblem.png"
+            alt="Spider Emblem"
+            style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "50%", filter: "drop-shadow(0 0 4px rgba(255,215,0,0.5))" }}
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+          />
+          <Bug size={20} style={{ color: "#ff1030", filter: "drop-shadow(0 0 6px rgba(255,0,40,0.8))", position: "absolute" }} />
+        </div>
+        <div>
+          <div className="text-sm font-bold tracking-widest leading-tight" style={{ fontFamily: "var(--font-heading)", color: "#fff", textShadow: "0 0 10px rgba(255,255,255,0.5)" }}>
+            AI Architect <span style={{ color: "#ffd700", textShadow: "0 0 8px rgba(255,215,0,0.8)" }}>2.0</span>
           </div>
-          <div>
-            <h1 className="font-bold text-lg text-white tracking-tight leading-none" style={{ fontFamily: "var(--font-heading)" }}>
-              Architect <span className="text-sky-400">2.0</span>
-            </h1>
-            <div className="flex items-center gap-1.5 mt-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[10px] text-emerald-400 font-semibold tracking-widest uppercase">
-                DeepMind Core
-              </span>
-            </div>
+          <div className="text-[9px] font-bold tracking-widest uppercase mt-0.5" style={{ color: "#ff3050", textShadow: "0 0 6px rgba(255,23,56,0.6)" }}>
+            + DEEPMIND CORE
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Active project banner */}
-      <AnimatePresence>
-        {selectedProjectName && (
-          <motion.div
-            initial={{ opacity: 0, height: 0, y: -10 }}
-            animate={{ opacity: 1, height: "auto", y: 0 }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 35 }}
-            className="mx-3 mt-3 overflow-hidden"
-          >
-            <div
-              className="p-3 rounded-xl"
-              style={{
-                background: "linear-gradient(135deg, rgba(255,23,56,0.12) 0%, rgba(204,0,34,0.08) 100%)",
-                border: "1px solid rgba(255,23,56,0.2)",
-              }}
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <Zap size={10} className="text-red-400" />
-                <p className="text-[9px] text-red-400 uppercase tracking-widest font-bold">Active Project</p>
-              </div>
-              <p className="text-xs font-semibold text-slate-200 truncate">{selectedProjectName}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Navigation */}
+      {/* NAV GROUPS */}
       <motion.nav
-        variants={sidebarVariants}
         initial="hidden"
         animate="visible"
-        className="flex-1 px-3 py-4 overflow-y-auto space-y-6"
+        variants={{ visible: { transition: { staggerChildren: 0.03 } } }}
+        className="flex-1 px-2 py-3 overflow-y-auto space-y-4 scrollbar-hide"
+        style={{ overflowY: "auto" }}
       >
-        {/* Workspace Section */}
-        <div>
-          <motion.p
-            variants={itemVariants}
-            className="px-3 mb-2 text-[9px] font-bold text-slate-600 uppercase tracking-[0.15em]"
-          >
-            Workspace
-          </motion.p>
-          <div className="space-y-0.5">
-            {workspaceItems.map((item) => (
-              <NavItem
-                key={item.id}
-                item={item}
-                isActive={
-                  currentView === item.id ||
-                  (item.id === "projects" && currentView.startsWith("project-"))
-                }
-                onClick={() => onViewChange(item.id)}
-              />
-            ))}
+        {navGroups.map((group, gi) => (
+          <div key={gi}>
+            {group.label && (
+              <motion.p variants={itemVariants}
+                className="px-3 mb-1.5 text-[9px] font-bold uppercase tracking-widest"
+                style={{ color: "#ff2040", opacity: 0.7 }}>
+                {group.label}
+              </motion.p>
+            )}
+            <div className="space-y-0.5">
+              {group.items.map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={isItemActive(item.id)}
+                  onClick={() => onViewChange(item.id)}
+                />
+              ))}
+            </div>
+            {gi < navGroups.length - 1 && (
+              <div className="mt-3 mx-3 neon-divider-h opacity-30" />
+            )}
           </div>
-        </div>
-
-        {/* Neon divider */}
-        <div className="neon-divider mx-3" />
-
-        {/* Systems & Knowledge Section */}
-        <div>
-          <motion.p
-            variants={itemVariants}
-            className="px-3 mb-2 text-[9px] font-bold text-slate-600 uppercase tracking-[0.15em]"
-          >
-            Systems &amp; Knowledge
-          </motion.p>
-          <div className="space-y-0.5">
-            {knowledgeItems.map((item) => (
-              <NavItem
-                key={item.id}
-                item={item}
-                isActive={currentView === item.id}
-                onClick={() => onViewChange(item.id)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Log Out */}
-        <div className="mt-6 pt-4 border-t border-slate-800/50">
-          <motion.button
-            variants={itemVariants}
-            whileHover={{ x: 3 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors duration-200"
-          >
-            <LogOut size={16} className="shrink-0" />
-            <span className="font-semibold tracking-wide">Log Out</span>
-          </motion.button>
-        </div>
+        ))}
       </motion.nav>
 
-      {/* Footer */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="p-4 border-t border-red-500/10"
-      >
-        <div className="flex items-center justify-between text-[10px] text-slate-600">
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>Local · Ready</span>
+      {/* BOTTOM PROFILE + STATUS */}
+      <div className="px-3 pb-3 pt-2 space-y-3"
+        style={{ borderTop: "1px solid rgba(255,215,0,0.2)", background: "rgba(10,0,20,0.6)" }}>
+
+        {/* Profile */}
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 relative overflow-hidden"
+            style={{
+              background: "radial-gradient(circle, rgba(255,23,56,0.35) 0%, rgba(50,0,10,0.9) 100%)",
+              border: "1.5px solid rgba(255,215,0,0.7)",
+              boxShadow: "0 0 14px rgba(255,23,56,0.4), 0 0 20px rgba(255,215,0,0.2)"
+            }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/spider-login/hero_icon_iron.png"
+              alt="Architect"
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+            <Bug size={16} style={{ color: "#ff1030", position: "absolute" }} />
           </div>
-          <span className="font-mono text-slate-700">v2.0.4</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white leading-tight" style={{ textShadow: "0 0 8px rgba(255,255,255,0.4)" }}>ARCHITECT</p>
+            <p className="text-[9px] uppercase tracking-widest leading-tight" style={{ color: "#ffd700", textShadow: "0 0 6px rgba(255,215,0,0.6)" }}>SPIDER-SYMBIOTE</p>
+            <span className="inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-full mt-0.5"
+              style={{ background: "rgba(0,180,60,0.1)", color: "#00c040", border: "1px solid rgba(0,180,60,0.25)", boxShadow: "0 0 8px rgba(0,200,80,0.2)" }}>
+              <span className="w-1 h-1 bg-green-400 rounded-full animate-pulse-green" />
+              ONLINE
+            </span>
+          </div>
         </div>
-        {/* CPU meter decorative */}
-        <div className="mt-2 progress-bar h-0.5">
-          <motion.div
-            className="progress-fill h-full"
-            initial={{ width: "0%" }}
-            animate={{ width: "72%" }}
-            transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-          />
+
+        {/* Core System Load */}
+        <div className="space-y-1.5">
+          <div className="flex justify-between items-center">
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "#ffd700", textShadow: "0 0 6px rgba(255,215,0,0.6)" }}>CORE SYSTEM</span>
+          </div>
+          <div className="flex justify-between text-[10px] text-slate-500 mb-1">
+            <span>Load: Ready</span>
+            <span className="text-white font-bold">72%</span>
+          </div>
+          <div className="progress-bar h-1 rounded-full">
+            <div className="progress-fill h-full rounded-full" style={{ width: "72%" }} />
+          </div>
         </div>
-        <p className="text-[9px] text-slate-700 mt-1">Engine load: 72%</p>
-      </motion.div>
+
+        {/* Weather */}
+        <div className="flex items-center gap-2 pt-1">
+          <CloudRain size={14} style={{ color: "#00a0c0", filter: "drop-shadow(0 0 4px rgba(0,160,192,0.6))" }} />
+          <span className="text-[10px] text-white font-semibold">29°C</span>
+          <span className="text-[9px] text-slate-500 uppercase tracking-wider">Partly Cloudy</span>
+        </div>
+      </div>
     </motion.aside>
   );
 }

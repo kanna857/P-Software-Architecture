@@ -170,7 +170,7 @@ export default function AgentPipeline({ statuses, logs }: PipelineProps) {
             animate={hasRunning ? { rotate: 360 } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           >
-            <Zap size={18} className="text-red-400" />
+            <Zap size={18} className="text-red-500 glow-text-red" />
           </motion.div>
           <div>
             <h3 className="text-sm font-bold text-white">Multi-Agent Execution Pipeline</h3>
@@ -238,7 +238,7 @@ export default function AgentPipeline({ statuses, logs }: PipelineProps) {
               <span className="w-3 h-3 rounded-full bg-emerald-500/70" />
             </div>
             <div className="flex items-center gap-2">
-              <Terminal size={12} className="text-red-400" />
+              <Terminal size={12} className="text-red-500 glow-text-red" />
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                 Live Execution Console
               </span>

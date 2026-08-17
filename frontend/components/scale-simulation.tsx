@@ -28,13 +28,13 @@ export default function ScaleSimulation({ scaleData }: ScaleProps) {
   const metrics = [scale_10x, scale_100x, scale_1000x];
 
   const getLoadBadge = (multiplier: string) => {
-    if (multiplier === "10x") return "bg-red-500/10 text-red-400 border-red-500/20";
+    if (multiplier === "10x") return "bg-red-500/10 text-red-500 glow-text-red border-red-500/20";
     if (multiplier === "100x") return "bg-amber-500/10 text-amber-400 border-amber-500/20";
     return "bg-rose-500/10 text-rose-400 border-rose-500/20";
   };
 
   const getIcon = (multiplier: string) => {
-    if (multiplier === "10x") return <Server size={20} className="text-red-400" />;
+    if (multiplier === "10x") return <Server size={20} className="text-red-500 glow-text-red" />;
     if (multiplier === "100x") return <Database size={20} className="text-amber-400" />;
     return <GitMerge size={20} className="text-rose-400" />;
   };
@@ -46,7 +46,7 @@ export default function ScaleSimulation({ scaleData }: ScaleProps) {
         {metrics.map((spec) => (
           <div 
             key={spec.load_multiplier}
-            className="bg-black border border-red-900/30 p-6 rounded-xl flex flex-col justify-between hover:border-slate-700/80 transition-all duration-300 relative group"
+            className="cyber-panel cyber-panel-red p-6 rounded-xl flex flex-col justify-between hover:border-slate-700/80 transition-all duration-300 relative group"
           >
             {/* Header */}
             <div>
@@ -54,7 +54,7 @@ export default function ScaleSimulation({ scaleData }: ScaleProps) {
                 <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${getLoadBadge(spec.load_multiplier)}`}>
                   {spec.load_multiplier} Multiplier
                 </span>
-                <span className="p-2 bg-slate-850 rounded-lg group-hover:scale-110 transition duration-300">
+                <span className="p-2 cyber-panel rounded-lg group-hover:scale-110 transition duration-300">
                   {getIcon(spec.load_multiplier)}
                 </span>
               </div>
@@ -83,9 +83,9 @@ export default function ScaleSimulation({ scaleData }: ScaleProps) {
             <div className="border-t border-red-900/30 pt-4 mt-6">
               <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">Architectural Mitigation</span>
               <p className="text-xs text-red-300 leading-relaxed font-semibold mb-3">{spec.recommended_architecture_change}</p>
-              <div className="flex justify-between items-center text-xs font-bold bg-slate-850 p-2 rounded">
+              <div className="flex justify-between items-center text-xs font-bold cyber-panel p-2 rounded">
                 <span className="text-slate-400">Additional Cost</span>
-                <span className="text-red-400">+${spec.additional_cost_monthly}/mo</span>
+                <span className="text-red-500 glow-text-red">+${spec.additional_cost_monthly}/mo</span>
               </div>
             </div>
           </div>
@@ -93,9 +93,9 @@ export default function ScaleSimulation({ scaleData }: ScaleProps) {
       </div>
 
       {/* Scaling Roadmap Card */}
-      <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-        <h3 className="text-white font-bold text-sm mb-5 flex items-center gap-2">
-          <Zap size={18} className="text-red-400" />
+      <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+        <h3 className="text-white font-bold glow-text-white text-sm mb-5 flex items-center gap-2">
+          <Zap size={18} className="text-red-500 glow-text-red" />
           Recommended Scaling Operations Roadmap
         </h3>
         <div className="relative border-l border-red-900/40 ml-4 pl-6 space-y-6">

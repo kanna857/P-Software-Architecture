@@ -27,7 +27,14 @@ import {
   Trash2,
   Zap,
   Sparkles,
-  BarChart2
+  BarChart2,
+  Database,
+  ShieldAlert,
+  Bug,
+  CloudRain,
+  Clock,
+  FolderGit2,
+  CheckCircle2
 } from "lucide-react";
 
 // Animation variants
@@ -407,207 +414,347 @@ export default function Home() {
     link.click();
     document.body.removeChild(link);
   };
-
-  // View Router Render Methods
+  // View Routes
   const renderDashboard = () => {
-    const stats = [
-      { label: "Active Projects",  value: projects.length, color: "#ff4d6d", icon: Layers },
-      { label: "Agent Specialists", value: "12",            color: "#aa001a", icon: Zap },
-      { label: "Avg Readiness",    value: "87/100",         color: "#34d399", icon: BarChart2 },
-      { label: "RAG Collections",  value: "11 Core",        color: "#ff8c9a", icon: FileCode },
+    const sampleProjects = [
+      {
+        name: "E-Commerce Platform",
+        desc: "Modern, scalable e-commerce system with microservices",
+        status: "Active",
+        time: "2h ago",
+        ver: "v2.1.0",
+        tags: ["Architecture", "Database", "API", "Security", "Deployment"],
+        color: "#ff1030"
+      },
+      {
+        name: "Real-time Analytics",
+        desc: "Event-driven analytics platform with stream processing",
+        status: "Running",
+        time: "5h ago",
+        ver: "v1.3.2",
+        tags: ["Data", "Stream", "AI", "Scalability", "Monitoring"],
+        color: "#00c0e0"
+      },
+      {
+        name: "Customer Support AI",
+        desc: "Multi-agent support system with RAG and memory",
+        status: "Active",
+        time: "1d ago",
+        ver: "v1.0.5",
+        tags: ["Agents", "RAG", "LLM", "Security", "Integration"],
+        color: "#ff1030"
+      },
+      {
+        name: "DevOps Automation",
+        desc: "CI/CD pipeline with automated deployment and monitoring",
+        status: "Running",
+        time: "2d ago",
+        ver: "v0.9.8",
+        tags: ["CI/CD", "Kubernetes", "Monitoring", "Security", "Automation"],
+        color: "#00c0e0"
+      },
     ];
 
+    const displayProjects = projects.length > 0 ? projects : sampleProjects;
+
     return (
-      <motion.div variants={stagger} initial="hidden" animate="visible" className="space-y-8">
-        {/* Hero Banner */}
-        <motion.div
-          variants={fadeUp}
-          custom={0}
-          className="relative rounded-2xl p-8 overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8"
-          style={{
-            background: "linear-gradient(135deg, rgba(15,0,5,0.95) 0%, rgba(20,0,5,0.9) 100%)",
-            border: "1px solid rgba(255,23,56,0.2)",
-          }}
-        >
-          {/* Glow orbs */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-20 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #cc0022 0%, transparent 70%)" }} />
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full opacity-10 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)" }} />
-          <div className="absolute inset-0 neon-divider" style={{ top: "auto", bottom: 0, height: 1 }} />
+      <motion.div variants={fadeIn} initial="hidden" animate="visible" className="flex flex-col min-h-0 relative" style={{ height: "calc(100vh - 80px)" }}>
 
-          <div className="space-y-4 z-10 flex-1">
-            <motion.div
-              className="flex items-center gap-2"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <span className="text-[10px] font-bold uppercase tracking-widest text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full">Multi-Agent AI</span>
-              <span className="text-[10px] text-slate-600">·</span>
-              <span className="text-[10px] text-slate-500">LangGraph Orchestration</span>
-            </motion.div>
-            <motion.h2
-              className="text-3xl md:text-4xl font-extrabold leading-tight"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <span className="text-white">AI Software </span>
-              <span className="gradient-text">Architect 2.0</span>
-            </motion.h2>
-            <motion.p
-              className="text-slate-400 text-sm max-w-lg leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              Design, audit, and simulate production-grade systems with specialized AI agents.
-              Requirements, databases, APIs, security — generated in seconds.
-            </motion.p>
-            <motion.div
-              className="flex gap-3 pt-1"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setCurrentView("new-architecture")}
-                className="btn-primary flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-              >
-                <PlusCircle size={16} />
-                New Architecture
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={handleLaunchDemo}
-                className="btn-ghost flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-red-300"
-              >
-                <Sparkles size={15} />
-                E-Commerce Demo
-              </motion.button>
-            </motion.div>
-          </div>
+        <div className="flex gap-5 h-full overflow-hidden">
 
-          {/* Stats grid */}
-          <div className="grid grid-cols-2 gap-3 z-10 w-full md:w-72 shrink-0">
-            {stats.map((s, i) => {
-              const Icon = s.icon;
-              return (
-                <motion.div
-                  key={s.label}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + i * 0.08, type: "spring" }}
-                  className="rounded-xl p-3 flex flex-col gap-1"
-                  style={{
-                    background: "rgba(15,0,5,0.8)",
-                    border: `1px solid ${s.color}22`,
-                  }}
+          {/* ===== LEFT: Hero + Projects ===== */}
+          <div className="flex flex-col flex-1 min-w-0 overflow-y-auto pr-1 gap-5" style={{ scrollbarWidth: "none" }}>
+
+            {/* HERO SECTION */}
+            <div className="flex-shrink-0">
+              {/* Tags */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                  style={{ background: "rgba(255,0,40,0.15)", color: "#ff2050", border: "1px solid rgba(255,0,40,0.35)" }}>
+                  MULTI-AGENT AI
+                </span>
+                <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono tracking-wider">
+                  <Layers size={10} className="opacity-60"/> LangGraph Orchestration
+                </span>
+              </div>
+
+              {/* Main Title */}
+              <h1 className="text-5xl font-extrabold tracking-tight leading-none mb-3 title-gradient" style={{ fontFamily: "var(--font-heading)", lineHeight: "1.05" }}>
+                AI Software Architect 2.0
+              </h1>
+
+              <p className="text-sm text-slate-400 max-w-lg mb-5 leading-relaxed">
+                Design, audit, and simulate production-grade systems with specialized AI agents. Requirements, databases, APIs, security — generated in seconds.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex items-center gap-3 mb-6">
+                <button
+                  onClick={() => setCurrentView("new-architecture")}
+                  className="cyber-btn flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-md"
                 >
-                  <Icon size={14} style={{ color: s.color }} />
-                  <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">{s.label}</span>
-                  <span className="text-lg font-extrabold stat-number" style={{ color: s.color }}>{s.value}</span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Projects Grid */}
-        <div>
-          <motion.h3
-            variants={fadeUp}
-            custom={1}
-            className="text-white font-extrabold text-base mb-5 flex items-center gap-2"
-          >
-            <Activity size={16} className="text-red-400" />
-            Current Software Projects
-          </motion.h3>
-
-          {projects.length === 0 ? (
-            <motion.div
-              variants={fadeUp}
-              custom={2}
-              className="rounded-2xl p-10 text-center"
-              style={{ background: "rgba(15,0,5,0.6)", border: "1px dashed rgba(255,23,56,0.2)" }}
-            >
-              <Layers size={32} className="text-red-500/30 mx-auto mb-3" />
-              <p className="text-slate-400 text-sm">No architectures yet.</p>
-              <p className="text-slate-600 text-xs mt-1">Click "New Architecture" to design your first system.</p>
-            </motion.div>
-          ) : (
-            <motion.div
-              variants={stagger}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-              {projects.map((proj, i) => (
-                <motion.div
-                  key={proj.id}
-                  variants={fadeUp}
-                  custom={i}
-                  whileHover={{ y: -3 }}
-                  onClick={() => handleSelectProject(proj.id)}
-                  className="relative group cursor-pointer rounded-2xl p-6 flex flex-col justify-between overflow-hidden card-hover"
-                  style={{
-                    background: "rgba(15,0,5,0.8)",
-                    border: "1px solid rgba(255,23,56,0.1)",
-                  }}
+                  <PlusCircle size={13}/> New Architecture
+                </button>
+                <button
+                  onClick={handleLaunchDemo}
+                  className="cyber-btn cyber-btn-outline flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-md"
+                  style={{ color: "#aabbcc" }}
                 >
-                  {/* Hover glow */}
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,23,56,0.08) 0%, transparent 70%)" }}
-                  />
+                  <Terminal size={13}/> E-Commerce Demo
+                </button>
+              </div>
+            </div>
 
-                  {/* Delete button */}
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileHover={{ scale: 1.1 }}
-                    onClick={(e) => handleDeleteProject(proj.id, e)}
-                    className="absolute top-4 right-4 z-20 p-1.5 btn-danger rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={13} />
-                  </motion.button>
+            {/* CURRENT PROJECTS LIST */}
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Activity size={14} style={{ color: "#ff2050" }}/>
+                  <h2 className="text-sm font-bold text-white uppercase tracking-wider">Current Software Projects</h2>
+                </div>
+              </div>
 
-                  <div className="relative z-10">
-                    <div className="w-8 h-8 rounded-lg mb-3 flex items-center justify-center"
-                      style={{ background: "rgba(255,23,56,0.15)", border: "1px solid rgba(255,23,56,0.2)" }}
+              <div className="space-y-2.5">
+                {displayProjects.map((proj: any, i: number) => {
+                  const isActive = proj.status === "Active";
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => proj.id && handleSelectProject(proj.id)}
+                      className="cyber-panel cyber-panel-red flex items-center gap-4 p-3.5 rounded-lg cursor-pointer group transition-all duration-200"
+                      style={{
+                        background: "rgba(8, 0, 15, 0.7)",
+                        boxShadow: "0 2px 12px rgba(0,0,0,0.5)",
+                      }}
+                      onMouseEnter={e => {
+                        (e.currentTarget as HTMLElement).style.background = "rgba(12, 0, 22, 0.85)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(220, 0, 50, 0.5)";
+                      }}
+                      onMouseLeave={e => {
+                        (e.currentTarget as HTMLElement).style.background = "rgba(8, 0, 15, 0.7)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(200, 0, 50, 0.35)";
+                      }}
                     >
-                      <Layers size={15} className="text-red-400" />
-                    </div>
-                    <h4 className="font-bold pr-8 text-slate-100 group-hover:text-red-300 transition-colors text-sm leading-tight">
-                      {proj.name}
-                    </h4>
-                    <p className="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">{proj.description}</p>
-                  </div>
+                      {/* Project Icon */}
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 overflow-hidden relative"
+                        style={{ background: `rgba(${i % 2 === 0 ? "180,0,30" : "0,80,120"},0.2)`, border: `1px solid rgba(${i % 2 === 0 ? "200,0,40" : "0,150,200"},0.3)` }}>
+                        {i % 2 === 0
+                          ? <Bug size={22} style={{ color: "#ff1030", filter: "drop-shadow(0 0 6px rgba(255,16,48,0.6))" }} />
+                          : <Layers size={20} style={{ color: "#00b0d0", filter: "drop-shadow(0 0 6px rgba(0,176,208,0.6))" }} />
+                        }
+                      </div>
 
-                  <div
-                    className="mt-5 pt-4 flex items-center justify-between text-[11px] relative z-10"
-                    style={{ borderTop: "1px solid rgba(255,23,56,0.1)" }}
-                  >
-                    <span className="text-slate-600">{proj.industry || "General"}</span>
-                    <span className="flex items-center gap-1 text-red-400 font-semibold group-hover:gap-2 transition-all">
-                      Open Workspace <ArrowRight size={11} />
-                    </span>
+                      {/* Project Info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2.5 mb-1">
+                          <h3 className="text-sm font-bold text-white truncate">{proj.name}</h3>
+                          <span className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${isActive ? "badge-active" : "badge-running"}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-green-400" : "bg-cyan-400"} animate-pulse`}/>
+                            {proj.status}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 truncate mb-2">{proj.description || proj.desc}</p>
+                        <div className="flex flex-wrap gap-1">
+                          {(proj.tags || ["Architecture", "API", "Security"]).map((tag: string, ti: number) => (
+                            <span key={ti} className="tag-pill">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Meta: Updated */}
+                      <div className="flex flex-col items-end text-right shrink-0 px-4 border-r border-red-900/20">
+                        <span className="text-[9px] text-slate-600 uppercase tracking-widest mb-0.5">Updated</span>
+                        <span className="text-xs font-semibold text-slate-300">{proj.time || proj.updated_at || "—"}</span>
+                      </div>
+
+                      {/* Meta: Version */}
+                      <div className="flex flex-col items-end text-right shrink-0 px-3">
+                        <span className="text-[9px] text-slate-600 uppercase tracking-widest mb-0.5">Version</span>
+                        <span className="text-xs font-semibold text-slate-300 font-mono">{proj.ver || proj.version || "v1.0"}</span>
+                      </div>
+
+                      {/* Arrow */}
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200"
+                        style={{ background: "rgba(200,0,40,0.15)", border: "1px solid rgba(200,0,40,0.3)" }}>
+                        <ArrowRight size={13} style={{ color: "#ff2050" }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* ===== RIGHT: Metrics Panel ===== */}
+          <div className="flex flex-col gap-3 shrink-0 overflow-y-auto" style={{ width: "280px", scrollbarWidth: "none" }}>
+
+            {/* Backend Connected */}
+            <div className="flex justify-end">
+              <span className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                style={{ background: "rgba(0,180,60,0.08)", color: "#00c040", border: "1px solid rgba(0,180,60,0.2)" }}>
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse-green"/>
+                Backend Connected
+              </span>
+            </div>
+
+            {/* TOP STATS 2x2 */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {/* Active Projects */}
+              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Layers size={11} style={{ color: "#ff2050" }}/>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Active Projects</span>
+                </div>
+                <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>
+                  {projects.length || 8}
+                </div>
+                <div className="text-[9px] text-slate-600">+2 this week</div>
+                <div className="mt-2 h-6 flex items-end gap-px">
+                  {[3,5,2,7,4,6,8].map((v,i) => (
+                    <div key={i} className="flex-1 rounded-sm" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
+                  ))}
+                </div>
+              </div>
+
+              {/* Agent Specialists */}
+              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Cpu size={11} style={{ color: "#ff2050" }}/>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Agent Specialists</span>
+                </div>
+                <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>12</div>
+                <div className="text-[9px] text-green-500 font-bold">Online</div>
+                <div className="mt-2 h-6 flex items-end gap-px">
+                  {[6,4,8,3,7,5,9].map((v,i) => (
+                    <div key={i} className="flex-1 rounded-sm" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
+                  ))}
+                </div>
+              </div>
+
+              {/* Avg Readiness */}
+              <div className="cyber-panel cyber-panel-blue p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <TrendingUp size={11} style={{ color: "#00c0e0" }}/>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Avg Readiness</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-extrabold font-mono" style={{ color: "#00c0e0", textShadow: "0 0 10px rgba(0,192,224,0.5)" }}>
+                    87<span className="text-sm text-slate-500">/100</span>
                   </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
+                  <svg viewBox="0 0 36 36" className="w-10 h-10 -rotate-90 ml-auto">
+                    <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(0,192,224,0.1)" strokeWidth="3"/>
+                    <circle cx="18" cy="18" r="14" fill="none" stroke="#00c0e0" strokeWidth="3"
+                      strokeDasharray="87 100" strokeLinecap="round"
+                      style={{ filter: "drop-shadow(0 0 4px rgba(0,192,224,0.6))" }}/>
+                  </svg>
+                </div>
+                <div className="text-[9px] text-slate-600 mt-1">↑ 12% from last run</div>
+              </div>
+
+              {/* RAG Collections */}
+              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Database size={11} style={{ color: "#ff2050" }}/>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">RAG Collections</span>
+                </div>
+                <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>
+                  11 <span className="text-base text-slate-500 font-medium">Core</span>
+                </div>
+                <div className="text-[9px] text-slate-600">Updated</div>
+                <Database size={28} className="mt-1 ml-auto opacity-10" style={{ color: "#ff2050" }}/>
+              </div>
+            </div>
+
+            {/* SYSTEM HEALTH */}
+            <div className="cyber-panel cyber-panel-red p-4 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Activity size={13} style={{ color: "#ff2050" }}/>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider">System Health</h3>
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { label: "CPU", val: 34, color: "#00c0e0" },
+                  { label: "Memory", val: 62, color: "#ff2050" },
+                  { label: "Storage", val: 48, color: "#00c0e0" },
+                  { label: "Network", val: 21, color: "#ff2050" },
+                ].map((g, i) => (
+                  <div key={i} className="flex flex-col items-center gap-1.5">
+                    <div className="relative w-14 h-14">
+                      <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                        <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3"/>
+                        <circle cx="18" cy="18" r="14" fill="none" stroke={g.color} strokeWidth="3"
+                          strokeDasharray={`${g.val} 100`} strokeLinecap="round"
+                          style={{ filter: `drop-shadow(0 0 3px ${g.color})` }}/>
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-[10px] font-bold text-white">{g.val}%</span>
+                      </div>
+                    </div>
+                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{g.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RECENT ACTIVITY */}
+            <div className="cyber-panel cyber-panel-red p-4 rounded-lg flex-1" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Clock size={13} style={{ color: "#ff2050" }}/>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider">Recent Activity</h3>
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest cursor-pointer hover:text-white transition-colors" style={{ color: "#00a0c0" }}>
+                  View All
+                </span>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { action: "Architecture generated", sub: "E-Commerce Platform",  time: "2h ago",  IconC: CheckCircle2,  color: "#00c050" },
+                  { action: "Agent run completed",    sub: "Security Analysis",    time: "3h ago",  IconC: Activity,      color: "#00a0c0" },
+                  { action: "New project created",    sub: "Real-time Analytics",  time: "5h ago",  IconC: PlusCircle,    color: "#8040c0" },
+                  { action: "Database synced",        sub: "Knowledge Base",       time: "1d ago",  IconC: Database,      color: "#c07020" },
+                  { action: "Agent run completed",    sub: "Cost Analysis",        time: "1d ago",  IconC: CheckCircle2,  color: "#00c050" },
+                ].map((act, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: `${act.color}18`, border: `1px solid ${act.color}40` }}>
+                      <act.IconC size={11} style={{ color: act.color }}/>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] font-semibold text-white truncate">{act.action}</p>
+                      <p className="text-[10px] text-slate-600 truncate">{act.sub}</p>
+                    </div>
+                    <span className="text-[9px] text-slate-600 font-mono shrink-0">{act.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </div>
+
+        {/* BOTTOM BUILD BAR */}
+        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center py-2 pointer-events-none"
+          style={{ background: "linear-gradient(0deg, rgba(4,0,8,0.9) 0%, transparent 100%)" }}>
+          <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.35em] text-slate-600">
+            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">BUILD</span>
+            <span style={{ color: "#660020" }}>+</span>
+            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">DEPLOY</span>
+            <Bug size={18} style={{ color: "#cc0030", filter: "drop-shadow(0 0 8px rgba(200,0,48,0.8))" }}/>
+            <span style={{ color: "#660020" }}>+</span>
+            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">DOMINATE</span>
+          </div>
+        </div>
+
       </motion.div>
     );
   };
 
   const renderNewArchitecture = () => {
     return (
-      <div className="max-w-2xl bg-black border border-red-900/30 rounded-xl p-8 space-y-6">
+      <div className="max-w-2xl cyber-panel cyber-panel-red rounded-xl p-8 space-y-6">
         <div>
-          <h3 className="text-white font-extrabold text-lg">Create New Software Architecture</h3>
+          <h3 className="text-white font-extrabold glow-text-white text-lg">Create New Software Architecture</h3>
           <p className="text-slate-400 text-xs mt-1">Specify design targets. Generates requirements, databases, APIs, cost structures, and security checks.</p>
         </div>
 
@@ -619,7 +766,7 @@ export default function Home() {
               placeholder="e.g. Fintech Mobile Ledger" 
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
-              className="w-full bg-[#0a0003] border border-red-900/30 rounded-lg p-3 text-slate-100 text-sm focus:border-red-600 focus:outline-none"
+              className="w-full cyber-panel cyber-panel-blue rounded-lg p-3 text-slate-100 text-sm focus:border-red-600 focus:outline-none"
               required
             />
           </div>
@@ -631,7 +778,7 @@ export default function Home() {
               placeholder="e.g. Build an analytics tool tracking orders and sales, using JWT tokens, payments, and product search dashboards..." 
               value={formDesc}
               onChange={(e) => setFormDesc(e.target.value)}
-              className="w-full bg-[#0a0003] border border-red-900/30 rounded-lg p-3 text-slate-100 text-sm focus:border-red-600 focus:outline-none"
+              className="w-full cyber-panel cyber-panel-blue rounded-lg p-3 text-slate-100 text-sm focus:border-red-600 focus:outline-none"
               required
             />
           </div>
@@ -654,27 +801,27 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-red-900/30">
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Industry</label>
-                <input type="text" value={formIndustry} onChange={(e) => setFormIndustry(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formIndustry} onChange={(e) => setFormIndustry(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Expected active users</label>
-                <input type="text" value={formUsers} onChange={(e) => setFormUsers(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formUsers} onChange={(e) => setFormUsers(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Expected throughput</label>
-                <input type="text" value={formTraffic} onChange={(e) => setFormTraffic(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formTraffic} onChange={(e) => setFormTraffic(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Cloud Hosting</label>
-                <input type="text" value={formCloud} onChange={(e) => setFormCloud(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formCloud} onChange={(e) => setFormCloud(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Availability Target</label>
-                <input type="text" value={formAvailability} onChange={(e) => setFormAvailability(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formAvailability} onChange={(e) => setFormAvailability(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Target Budget</label>
-                <input type="text" value={formBudget} onChange={(e) => setFormBudget(e.target.value)} className="w-full bg-[#0a0003] border border-red-900/40 rounded p-2 text-xs text-slate-100 focus:outline-none" />
+                <input type="text" value={formBudget} onChange={(e) => setFormBudget(e.target.value)} className="w-full cyber-panel cyber-panel-blue rounded p-2 text-xs text-slate-100 focus:outline-none" />
               </div>
             </div>
           )}
@@ -689,7 +836,7 @@ export default function Home() {
             <button 
               type="button" 
               onClick={() => setCurrentView("dashboard")}
-              className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
+              className="px-6 py-2.5 cyber-panel cyber-panel-blue hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
             >
               Cancel
             </button>
@@ -727,7 +874,7 @@ export default function Home() {
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
-                <Layers className="text-red-400" size={18} />
+                <Layers className="text-red-500 glow-text-red" size={18} />
               </motion.div>
               <h2 className="text-lg font-extrabold text-white">{project.name}</h2>
             </div>
@@ -793,8 +940,8 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Core spec details */}
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-                  <h3 className="text-white font-bold text-sm mb-4">Requirements & Technical Constraints</h3>
+                <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+                  <h3 className="text-white font-bold glow-text-white text-sm mb-4">Requirements & Technical Constraints</h3>
                   <div className="grid grid-cols-2 gap-4 text-xs">
                     <div>
                       <span className="text-slate-500 font-bold uppercase block">Industry Vertical</span>
@@ -816,10 +963,10 @@ export default function Home() {
                 </div>
 
                 {architectureData?.requirements && (
-                  <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
-                    <h3 className="text-white font-bold text-sm">Extracted Requirements Envelope</h3>
+                  <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
+                    <h3 className="text-white font-bold glow-text-white text-sm">Extracted Requirements Envelope</h3>
                     <div>
-                      <h4 className="text-red-400 font-bold text-xs uppercase mb-2">Functional Specs:</h4>
+                      <h4 className="text-red-500 glow-text-red font-bold text-xs uppercase mb-2">Functional Specs:</h4>
                       <ul className="list-disc pl-5 text-xs text-slate-300 space-y-1">
                         {architectureData.requirements.functional_requirements?.map((req: string, i: number) => (
                           <li key={i}>{req}</li>
@@ -827,7 +974,7 @@ export default function Home() {
                       </ul>
                     </div>
                     <div className="pt-2">
-                      <h4 className="text-red-400 font-bold text-xs uppercase mb-2">Non-Functional Target Constraints:</h4>
+                      <h4 className="text-red-500 glow-text-red font-bold text-xs uppercase mb-2">Non-Functional Target Constraints:</h4>
                       <ul className="list-disc pl-5 text-xs text-slate-300 space-y-1">
                         {architectureData.requirements.non_functional_requirements?.map((req: string, i: number) => (
                           <li key={i}>{req}</li>
@@ -840,9 +987,9 @@ export default function Home() {
 
               {/* Sidebar Score Card */}
               <div className="space-y-6">
-                <div className="bg-black border border-red-900/30 p-6 rounded-xl text-center space-y-3 relative overflow-hidden">
+                <div className="cyber-panel cyber-panel-red p-6 rounded-xl text-center space-y-3 relative overflow-hidden">
                   <h3 className="text-slate-400 font-bold text-xs uppercase tracking-wider">Production Readiness Index</h3>
-                  <div className="text-4xl font-extrabold text-red-400">
+                  <div className="text-4xl font-extrabold text-red-500 glow-text-red">
                     {architectureData?.judge_results?.production_readiness || 0}
                     <span className="text-xs text-slate-500 font-normal"> / 100</span>
                   </div>
@@ -850,13 +997,13 @@ export default function Home() {
                 </div>
 
                 {architectureData?.judge_results?.scores && (
-                  <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
-                    <h3 className="text-white font-bold text-xs uppercase tracking-wider">Evaluation Benchmarks</h3>
+                  <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
+                    <h3 className="text-white font-bold glow-text-white text-xs uppercase tracking-wider">Evaluation Benchmarks</h3>
                     <div className="space-y-3 text-xs">
                       {Object.entries(architectureData.judge_results.scores).map(([k, score]: any) => (
                         <div key={k} className="flex justify-between items-center border-b border-red-900/40 pb-2">
                           <span className="capitalize text-slate-400">{k.replace("_", " ")}</span>
-                          <span className="font-bold text-red-400">{(score * 20).toFixed(0)}%</span>
+                          <span className="font-bold text-red-500 glow-text-red">{(score * 20).toFixed(0)}%</span>
                         </div>
                       ))}
                     </div>
@@ -884,8 +1031,8 @@ export default function Home() {
 
           {activeProjectTab === "database" && (
             <div className="space-y-6">
-              <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-                <h3 className="text-white font-bold text-sm mb-2">Relational Schemas configuration</h3>
+              <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+                <h3 className="text-white font-bold glow-text-white text-sm mb-2">Relational Schemas configuration</h3>
                 <p className="text-xs text-slate-400">Engine Type: {architectureData?.database?.db_type || "PostgreSQL"}</p>
                 <p className="text-xs text-slate-400 mt-1">Caching Strategy: {architectureData?.database?.caching_strategy}</p>
               </div>
@@ -893,8 +1040,8 @@ export default function Home() {
               {architectureData?.database?.tables && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {architectureData.database.tables.map((table: any, i: number) => (
-                    <div key={i} className="bg-black border border-red-900/40 p-4 rounded-lg">
-                      <h4 className="font-bold text-xs text-red-400 uppercase mb-2">{table.name}</h4>
+                    <div key={i} className="cyber-panel cyber-panel-red p-4 rounded-lg">
+                      <h4 className="font-bold text-xs text-red-500 glow-text-red uppercase mb-2">{table.name}</h4>
                       <p className="text-xs text-slate-400 leading-relaxed mb-3">{table.description}</p>
                       <ul className="text-xs font-mono space-y-1 bg-[#0a0003] p-2.5 rounded border border-red-900/40">
                         {table.columns.map((col: string, j: number) => (
@@ -910,8 +1057,8 @@ export default function Home() {
 
           {activeProjectTab === "api" && (
             <div className="space-y-6">
-              <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-                <h3 className="text-white font-bold text-sm mb-2">REST API Schema Interfaces</h3>
+              <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+                <h3 className="text-white font-bold glow-text-white text-sm mb-2">REST API Schema Interfaces</h3>
                 <p className="text-xs text-slate-400">Auth scheme: {architectureData?.api?.authentication}</p>
                 <p className="text-xs text-slate-400 mt-1">Rate limit Policy: {architectureData?.api?.rate_limiting}</p>
               </div>
@@ -919,10 +1066,10 @@ export default function Home() {
               {architectureData?.api?.endpoints && (
                 <div className="space-y-4">
                   {architectureData.api.endpoints.map((ep: any, i: number) => (
-                    <div key={i} className="bg-black border border-red-900/40 p-4 rounded-xl flex flex-col md:flex-row justify-between gap-4">
+                    <div key={i} className="cyber-panel cyber-panel-red p-4 rounded-xl flex flex-col md:flex-row justify-between gap-4">
                       <div>
                         <div className="flex items-center gap-2 mb-2">
-                          <span className={`px-2.5 py-0.5 rounded text-[10px] font-extrabold ${ep.method === "POST" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-sky-500/10 text-sky-400 border border-sky-500/20"}`}>
+                          <span className={`px-2.5 py-0.5 rounded text-[10px] font-extrabold ${ep.method === "POST" ? "cyber-panel cyber-panel-blue text-emerald-400" : "cyber-panel cyber-panel-blue text-sky-400"}`}>
                             {ep.method}
                           </span>
                           <span className="font-mono text-xs font-bold text-slate-200">{ep.path}</span>
@@ -966,9 +1113,9 @@ export default function Home() {
 
           {activeProjectTab === "what-if" && (
             <div className="space-y-6">
-              <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
+              <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
                 <div>
-                  <h3 className="text-white font-bold text-sm">What-If Architecture Simulator</h3>
+                  <h3 className="text-white font-bold glow-text-white text-sm">What-If Architecture Simulator</h3>
                   <p className="text-xs text-slate-400 mt-1">Ask hypotheticals to run simulations against connection pool sizes, CDN distributions, and compute thresholds.</p>
                 </div>
 
@@ -978,7 +1125,7 @@ export default function Home() {
                     placeholder="e.g. What happens if active sessions spike to 1 million?"
                     value={whatIfQuestion}
                     onChange={(e) => setWhatIfQuestion(e.target.value)}
-                    className="flex-1 bg-[#0a0003] border border-red-900/30 rounded-lg p-3 text-slate-100 text-xs focus:outline-none focus:border-red-600"
+                    className="flex-1 cyber-panel cyber-panel-blue rounded-lg p-3 text-slate-100 text-xs focus:outline-none focus:border-red-600"
                   />
                   <button 
                     type="submit" 
@@ -991,7 +1138,7 @@ export default function Home() {
               </div>
 
               {whatIfResponse && (
-                <div className="bg-black border border-red-900/40 p-6 rounded-xl space-y-4">
+                <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
                   <div>
                     <h4 className="text-[10px] text-slate-500 font-bold uppercase">Simulation Question</h4>
                     <p className="text-xs font-semibold text-red-300 mt-0.5">"{whatIfResponse.question}"</p>
@@ -1011,7 +1158,7 @@ export default function Home() {
 
                   <div className="pt-2 flex justify-between items-center text-xs font-bold bg-[#0a0003] p-3 rounded border border-red-900/40">
                     <span className="text-slate-400 uppercase tracking-wider text-[10px]">Estimated hosting cost adjustment</span>
-                    <span className="text-red-400 text-sm">{whatIfResponse.estimated_cost_delta}</span>
+                    <span className="text-red-500 glow-text-red text-sm">{whatIfResponse.estimated_cost_delta}</span>
                   </div>
                 </div>
               )}
@@ -1023,8 +1170,8 @@ export default function Home() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
                   {/* Version List with Delete Option */}
-                  <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
-                    <h3 className="text-white font-bold text-sm">Saved Snapshots History</h3>
+                  <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
+                    <h3 className="text-white font-bold glow-text-white text-sm">Saved Snapshots History</h3>
                     {versions.length === 0 ? (
                       <p className="text-xs text-slate-400">No version snapshots saved yet. Run the agent pipeline to generate a version.</p>
                     ) : (
@@ -1042,10 +1189,10 @@ export default function Home() {
                             {versions.map((v) => {
                               const readiness = v.data?.judge_results?.production_readiness ?? "N/A";
                               return (
-                                <tr key={v.id} className="hover:bg-slate-850/20 transition-all duration-150">
+                                <tr key={v.id} className="hover:cyber-panel/20 transition-all duration-150">
                                   <td className="py-3 font-bold text-slate-200">Version {v.version_num}</td>
                                   <td className="py-3 text-slate-400">{new Date(v.created_at).toLocaleString()}</td>
-                                  <td className="py-3 text-red-400 font-semibold">{readiness} / 100</td>
+                                  <td className="py-3 text-red-500 glow-text-red font-semibold">{readiness} / 100</td>
                                   <td className="py-3 text-right">
                                     <button
                                       onClick={() => handleDeleteVersion(v.id)}
@@ -1068,9 +1215,9 @@ export default function Home() {
 
                 <div className="space-y-6">
                   {/* Compare form */}
-                  <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
+                  <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
                     <div>
-                      <h3 className="text-white font-bold text-sm">Compare Snapshots</h3>
+                      <h3 className="text-white font-bold glow-text-white text-sm">Compare Snapshots</h3>
                       <p className="text-[10px] text-slate-400 mt-1">Select version snapshots to inspect drift changes and score trends side-by-side.</p>
                     </div>
 
@@ -1079,7 +1226,7 @@ export default function Home() {
                         <select 
                           value={compareA} 
                           onChange={(e) => setCompareA(e.target.value)}
-                          className="w-full bg-[#0a0003] border border-red-900/30 rounded p-2.5 text-xs text-slate-200 focus:outline-none"
+                          className="w-full cyber-panel cyber-panel-blue rounded p-2.5 text-xs text-slate-200 focus:outline-none"
                         >
                           <option value="">Select version A</option>
                           {versions.map(v => (
@@ -1092,7 +1239,7 @@ export default function Home() {
                         <select 
                           value={compareB} 
                           onChange={(e) => setCompareB(e.target.value)}
-                          className="w-full bg-[#0a0003] border border-red-900/30 rounded p-2.5 text-xs text-slate-200 focus:outline-none"
+                          className="w-full cyber-panel cyber-panel-blue rounded p-2.5 text-xs text-slate-200 focus:outline-none"
                         >
                           <option value="">Select version B</option>
                           {versions.map(v => (
@@ -1113,11 +1260,11 @@ export default function Home() {
               </div>
 
               {compareResponse && (
-                <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
+                <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
                   <div className="grid grid-cols-2 gap-6 text-center border-b border-red-900/30 pb-4">
                     <div>
                       <span className="text-xs text-slate-500 font-bold uppercase">Version {compareResponse.version_a} Readiness</span>
-                      <p className="text-2xl font-extrabold text-red-400 mt-1">{compareResponse.a_readiness}/100</p>
+                      <p className="text-2xl font-extrabold text-red-500 glow-text-red mt-1">{compareResponse.a_readiness}/100</p>
                     </div>
                     <div>
                       <span className="text-xs text-slate-500 font-bold uppercase">Version {compareResponse.version_b} Readiness</span>
@@ -1126,11 +1273,11 @@ export default function Home() {
                   </div>
 
                   <div className="space-y-4 text-xs">
-                    <h4 className="text-white font-bold">Drift changes logs:</h4>
+                    <h4 className="text-white font-bold glow-text-white">Drift changes logs:</h4>
                     <div className="grid grid-cols-1 gap-3 font-mono text-[11px] bg-[#0a0003] p-4 rounded border border-red-900/40 leading-relaxed text-slate-300">
-                      <div><span className="text-red-400 font-bold">[Requirements]:</span> {compareResponse.differences.requirements}</div>
-                      <div><span className="text-red-400 font-bold">[Database]:</span> {compareResponse.differences.database}</div>
-                      <div><span className="text-red-400 font-bold">[DevOps]:</span> {compareResponse.differences.devops}</div>
+                      <div><span className="text-red-500 glow-text-red font-bold">[Requirements]:</span> {compareResponse.differences.requirements}</div>
+                      <div><span className="text-red-500 glow-text-red font-bold">[Database]:</span> {compareResponse.differences.database}</div>
+                      <div><span className="text-red-500 glow-text-red font-bold">[DevOps]:</span> {compareResponse.differences.devops}</div>
                     </div>
                   </div>
                 </div>
@@ -1176,7 +1323,7 @@ export default function Home() {
         className="space-y-6"
       >
         <motion.div variants={fadeUp} custom={0}>
-          <h3 className="text-white font-extrabold text-lg">Hybrid RAG Knowledge Base</h3>
+          <h3 className="text-white font-extrabold glow-text-white text-lg">Hybrid RAG Knowledge Base</h3>
           <p className="text-slate-500 text-xs mt-1">Curated architecture patterns stored in local SQLite vector models — injected into every agent prompt.</p>
         </motion.div>
 
@@ -1233,31 +1380,31 @@ export default function Home() {
     return (
       <div className="space-y-6 max-w-xl">
         <div>
-          <h3 className="text-white font-extrabold text-lg">Platform Integrations</h3>
+          <h3 className="text-white font-extrabold glow-text-white text-lg">Platform Integrations</h3>
           <p className="text-slate-400 text-xs mt-1">Import external projects, OpenAPI document specs, or database schemas.</p>
         </div>
 
         {/* GitHub Import */}
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
           <h4 className="text-slate-200 font-bold text-sm flex items-center gap-2">
-            <GitBranch size={16} className="text-red-400" />
+            <GitBranch size={16} className="text-red-500 glow-text-red" />
             GitHub Repository Import
           </h4>
           <p className="text-xs text-slate-400">Scans code file files structure, reads requirements, database migrations, and CI config files.</p>
           <div className="flex gap-4">
-            <input type="text" placeholder="https://github.com/org/repo" className="flex-1 bg-[#0a0003] border border-red-900/30 rounded p-2.5 text-xs text-slate-200 focus:outline-none" />
+            <input type="text" placeholder="https://github.com/org/repo" className="flex-1 cyber-panel cyber-panel-blue rounded p-2.5 text-xs text-slate-200 focus:outline-none" />
             <button type="button" className="px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded text-xs font-bold transition">Import</button>
           </div>
         </div>
 
         {/* OpenAPI Spec Import */}
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl space-y-4">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl space-y-4">
           <h4 className="text-slate-200 font-bold text-sm flex items-center gap-2">
             <FileCode size={16} className="text-sky-400" />
             OpenAPI Specification Import
           </h4>
           <p className="text-xs text-slate-400">Ingest route endpoints, query models, and validation schemas directly.</p>
-          <textarea rows={3} placeholder="Paste OpenAPI JSON/YAML spec here..." className="w-full bg-[#0a0003] border border-red-900/30 rounded p-2.5 text-xs text-slate-200 focus:outline-none" />
+          <textarea rows={3} placeholder="Paste OpenAPI JSON/YAML spec here..." className="w-full cyber-panel cyber-panel-blue rounded p-2.5 text-xs text-slate-200 focus:outline-none" />
           <button type="button" className="px-4 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded text-xs font-bold transition">Ingest API spec</button>
         </div>
       </div>
@@ -1277,33 +1424,33 @@ export default function Home() {
     return (
       <div className="space-y-6">
         <div>
-          <h3 className="text-white font-extrabold text-lg">Observability & Telemetry Dashboards</h3>
+          <h3 className="text-white font-extrabold glow-text-white text-lg">Observability & Telemetry Dashboards</h3>
           <p className="text-slate-400 text-xs mt-1">Track pipeline latency runs, LLM command usage token costs, and agent success rates.</p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-black border border-red-900/30 p-6 rounded-xl">
+          <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
             <span className="text-[10px] text-slate-500 font-bold uppercase block">Pipeline Success Rate</span>
             <span className="text-2xl font-bold text-emerald-400 mt-1">{stats.success_rate}%</span>
           </div>
-          <div className="bg-black border border-red-900/30 p-6 rounded-xl">
+          <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
             <span className="text-[10px] text-slate-500 font-bold uppercase block">Avg Runtime Latency</span>
             <span className="text-2xl font-bold text-white mt-1">{stats.avg_generation_time_sec}s</span>
           </div>
-          <div className="bg-black border border-red-900/30 p-6 rounded-xl">
+          <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
             <span className="text-[10px] text-slate-500 font-bold uppercase block">Total API Billing Cost</span>
-            <span className="text-2xl font-bold text-red-400 mt-1">${stats.total_llm_cost.toFixed(4)}</span>
+            <span className="text-2xl font-bold text-red-500 glow-text-red mt-1">${stats.total_llm_cost.toFixed(4)}</span>
           </div>
-          <div className="bg-black border border-red-900/30 p-6 rounded-xl">
+          <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
             <span className="text-[10px] text-slate-500 font-bold uppercase block">RAG Retrieval Precision</span>
             <span className="text-2xl font-bold text-sky-400 mt-1">{stats.rag_quality_score}%</span>
           </div>
         </div>
 
         {/* Telemetry charts */}
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-          <h4 className="text-white font-bold text-sm mb-4">Agent Run Duration Benchmarks</h4>
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+          <h4 className="text-white font-bold glow-text-white text-sm mb-4">Agent Run Duration Benchmarks</h4>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.agent_performance && stats.agent_performance.length > 0 ? stats.agent_performance : [
@@ -1329,15 +1476,15 @@ export default function Home() {
 
   const renderSettings = () => {
     return (
-      <div className="max-w-xl bg-black border border-red-900/30 rounded-xl p-8 space-y-6">
+      <div className="max-w-xl cyber-panel cyber-panel-red rounded-xl p-8 space-y-6">
         <div>
-          <h3 className="text-white font-extrabold text-lg">System Configuration & Limits</h3>
+          <h3 className="text-white font-extrabold glow-text-white text-lg">System Configuration & Limits</h3>
           <p className="text-slate-400 text-xs mt-1">Configure security credentials and safety bounds to prevent infinite loops.</p>
         </div>
 
         <div className="space-y-4 text-xs">
           <div className="bg-[#0a0003] p-4 rounded border border-red-900/40 space-y-2">
-            <span className="font-bold text-red-400 uppercase">Provider Models:</span>
+            <span className="font-bold text-red-500 glow-text-red uppercase">Provider Models:</span>
             <div className="flex justify-between items-center text-slate-300">
               <span>Primary Engine:</span>
               <span className="font-mono text-slate-100 bg-black px-2 py-0.5 rounded">gpt-4o-mini</span>
@@ -1349,7 +1496,7 @@ export default function Home() {
           </div>
 
           <div className="bg-[#0a0003] p-4 rounded border border-red-900/40 space-y-2">
-            <span className="font-bold text-red-400 uppercase">Execution Guardrails:</span>
+            <span className="font-bold text-red-500 glow-text-red uppercase">Execution Guardrails:</span>
             <div className="flex justify-between items-center text-slate-300">
               <span>MAX_AGENT_CALLS limit:</span>
               <span className="font-mono text-slate-100">15 calls</span>
@@ -1369,7 +1516,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex text-slate-100 min-h-screen" style={{ background: "var(--bg-deep)" }}>
+    <div className="flex text-slate-100 h-screen overflow-hidden" style={{ background: "transparent", position: "relative", zIndex: 1 }}>
       {/* Sidebar navigation */}
       <Sidebar 
         currentView={currentView} 
@@ -1396,55 +1543,59 @@ export default function Home() {
       />
 
       {/* Main content area */}
-      <main className="flex-1 p-6 md:p-8 overflow-y-auto relative z-10">
-        {/* Breadcrumb header */}
+      <main className="flex-1 flex flex-col overflow-hidden relative z-10">
+        {/* Top Breadcrumb Header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex justify-between items-center mb-6 pb-4"
-          style={{ borderBottom: "1px solid rgba(255,23,56,0.08)" }}
+          className="flex items-center justify-between px-6 py-3 shrink-0"
+          style={{ borderBottom: "1px solid rgba(180,0,40,0.2)", background: "rgba(4,0,10,0.6)", backdropFilter: "blur(10px)" }}
         >
           <div className="flex items-center gap-2">
-            <span className="text-slate-600 text-[10px] font-bold uppercase tracking-widest">Console</span>
-            <span className="text-slate-700">/</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#4a4a5a" }}>Console</span>
+            <span style={{ color: "#2a2a3a" }}>/</span>
             <motion.span
               key={currentView}
-              initial={{ opacity: 0, x: 8 }}
+              initial={{ opacity: 0, x: 6 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-slate-300 text-[11px] font-bold uppercase tracking-wider capitalize"
+              className="text-[11px] font-bold uppercase tracking-widest"
+              style={{ color: "#ff2050" }}
             >
-              {currentView.includes("project-") ? "Project Workspace" : currentView.replace("-", " ")}
+              {currentView.includes("project-") ? "Project Workspace" : currentView.replace(/-/g, " ")}
             </motion.span>
           </div>
-          {/* Live status indicator */}
           <div className="flex items-center gap-2">
             <motion.span
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "#00c040", boxShadow: "0 0 6px #00c040" }}
             />
-            <span className="text-[10px] text-slate-600 font-mono">Backend connected</span>
+            <span className="text-[10px] font-mono" style={{ color: "#3a4a3a" }}>Backend connected</span>
           </div>
         </motion.header>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentView}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="max-w-7xl mx-auto"
-          >
-            {currentView === "dashboard" && renderDashboard()}
-            {currentView === "new-architecture" && renderNewArchitecture()}
-            {currentView.startsWith("project-") && renderProjectWorkspace()}
-            {currentView === "knowledge" && renderKnowledgeBase()}
-            {currentView === "integrations" && renderIntegrations()}
-            {currentView === "observability" && renderObservability()}
-            {currentView === "settings" && renderSettings()}
-          </motion.div>
-        </AnimatePresence>
+        {/* Page Content */}
+        <div className="flex-1 overflow-hidden px-6 py-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentView}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="h-full"
+            >
+              {currentView === "dashboard" && renderDashboard()}
+              {currentView === "new-architecture" && renderNewArchitecture()}
+              {currentView.startsWith("project-") && renderProjectWorkspace()}
+              {currentView === "knowledge" && renderKnowledgeBase()}
+              {currentView === "integrations" && renderIntegrations()}
+              {currentView === "observability" && renderObservability()}
+              {currentView === "settings" && renderSettings()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </main>
     </div>
   );

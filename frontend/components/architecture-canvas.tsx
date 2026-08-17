@@ -120,7 +120,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition ${
                 activeTab === key && !editMode
                   ? "bg-red-600 text-white shadow-md shadow-red-600/10"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                  : "text-slate-400 hover:cyber-panel cyber-panel-blue hover:text-slate-200"
               }`}
             >
               {key.replace("_", " ")}
@@ -131,7 +131,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition ${
               editMode
                 ? "bg-red-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                : "text-slate-400 hover:cyber-panel cyber-panel-blue hover:text-slate-200"
             }`}
           >
             <Edit3 size={12} />
@@ -142,7 +142,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
         <div className="flex gap-2">
           <button
             onClick={() => downloadFile(mermaidCode, `${activeTab}.mermaid`, "text/plain")}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 cyber-panel cyber-panel-blue hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition"
             title="Download Mermaid Source"
           >
             <Download size={14} />
@@ -150,7 +150,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
           </button>
           <button
             onClick={() => downloadFile(diagramSvg, `${activeTab}.svg`, "image/svg+xml")}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 cyber-panel cyber-panel-blue hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition"
             title="Download SVG Diagram"
           >
             <Image size={14} />
@@ -183,7 +183,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
             <div className="w-1/2 h-full bg-[#0a0003] p-6 flex flex-col items-center justify-center relative overflow-auto">
               {renderError ? (
                 <div className="bg-red-950/40 border border-red-800 p-4 rounded-lg m-4 max-w-md">
-                  <h4 className="text-red-400 font-bold text-sm">Mermaid Compile Error</h4>
+                  <h4 className="text-red-500 glow-text-red font-bold text-sm">Mermaid Compile Error</h4>
                   <p className="text-xs text-red-300 font-mono mt-1 overflow-x-auto">{renderError}</p>
                 </div>
               ) : (
@@ -214,7 +214,7 @@ export default function ArchitectureCanvas({ diagrams, onRegenerate }: CanvasPro
               <div className="w-full h-full flex items-center justify-center p-8 overflow-auto">
                 {renderError ? (
                   <div className="bg-red-950/40 border border-red-800 p-4 rounded-lg max-w-md">
-                    <h4 className="text-red-400 font-bold text-sm">Diagram Parsing Error</h4>
+                    <h4 className="text-red-500 glow-text-red font-bold text-sm">Diagram Parsing Error</h4>
                     <p className="text-xs text-red-300 font-mono mt-1">{renderError}</p>
                   </div>
                 ) : (

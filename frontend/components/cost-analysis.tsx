@@ -37,8 +37,8 @@ export default function CostAnalysis({ costData }: CostProps) {
     <div className="space-y-6">
       {/* Overview Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl flex items-center gap-4">
-          <div className="bg-red-600/10 p-3 rounded-lg text-red-400">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl flex items-center gap-4">
+          <div className="bg-red-600/10 p-3 rounded-lg text-red-500 glow-text-red">
             <DollarSign size={24} />
           </div>
           <div>
@@ -47,7 +47,7 @@ export default function CostAnalysis({ costData }: CostProps) {
           </div>
         </div>
 
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl flex items-center gap-4">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl flex items-center gap-4">
           <div className="bg-sky-600/10 p-3 rounded-lg text-sky-400">
             <Cloud size={24} />
           </div>
@@ -70,8 +70,8 @@ export default function CostAnalysis({ costData }: CostProps) {
 
       {/* Pricing Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-          <h3 className="text-white font-bold text-sm mb-4">Cloud Provider Resource Breakdown</h3>
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+          <h3 className="text-white font-bold glow-text-white text-sm mb-4">Cloud Provider Resource Breakdown</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={comparisonData}>
@@ -87,8 +87,8 @@ export default function CostAnalysis({ costData }: CostProps) {
           </div>
         </div>
 
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-          <h3 className="text-white font-bold text-sm mb-4">Architectural Options Price Matrix</h3>
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+          <h3 className="text-white font-bold glow-text-white text-sm mb-4">Architectural Options Price Matrix</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={profileData}>
@@ -104,15 +104,15 @@ export default function CostAnalysis({ costData }: CostProps) {
       </div>
 
       {/* Cost-Optimizations list */}
-      <div className="bg-black border border-red-900/30 p-6 rounded-xl">
-        <h3 className="text-white font-bold text-sm mb-4 flex items-center gap-2">
+      <div className="cyber-panel cyber-panel-red p-6 rounded-xl">
+        <h3 className="text-white font-bold glow-text-white text-sm mb-4 flex items-center gap-2">
           <ShieldCheck className="text-emerald-500" size={18} />
           Cost-Optimization Advisor Recommendations
         </h3>
         <ul className="space-y-3">
           {recommendations.map((rec, i) => (
             <li key={i} className="flex gap-3 text-sm text-slate-300">
-              <span className="text-red-400 font-bold">•</span>
+              <span className="text-red-500 glow-text-red font-bold">•</span>
               <span>{rec}</span>
             </li>
           ))}

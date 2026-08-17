@@ -29,7 +29,7 @@ export default function SecurityPanel({ securityData }: SecurityProps) {
   const getSeverityColor = (sev: Threat["severity"]) => {
     switch (sev) {
       case "Critical":
-        return "bg-red-500/10 text-red-400 border-red-500/20";
+        return "bg-red-500/10 text-red-500 glow-text-red border-red-500/20";
       case "High":
         return "bg-rose-500/10 text-rose-400 border-rose-500/20";
       case "Medium":
@@ -43,25 +43,25 @@ export default function SecurityPanel({ securityData }: SecurityProps) {
     <div className="space-y-6">
       {/* Security Principles Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl flex flex-col justify-between">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-white font-bold text-sm">Identity Management</h4>
-            <Key size={18} className="text-red-400" />
+            <h4 className="text-white font-bold glow-text-white text-sm">Identity Management</h4>
+            <Key size={18} className="text-red-500 glow-text-red" />
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">{authentication_strategy}</p>
         </div>
 
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl flex flex-col justify-between">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-white font-bold text-sm">Access Permissions</h4>
+            <h4 className="text-white font-bold glow-text-white text-sm">Access Permissions</h4>
             <Shield size={18} className="text-emerald-400" />
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">{authorization_strategy}</p>
         </div>
 
-        <div className="bg-black border border-red-900/30 p-6 rounded-xl flex flex-col justify-between">
+        <div className="cyber-panel cyber-panel-red p-6 rounded-xl flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-white font-bold text-sm">Encryption & Storage</h4>
+            <h4 className="text-white font-bold glow-text-white text-sm">Encryption & Storage</h4>
             <Lock size={18} className="text-sky-400" />
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">{data_protection}</p>
@@ -69,10 +69,10 @@ export default function SecurityPanel({ securityData }: SecurityProps) {
       </div>
 
       {/* STRIDE Threat Table */}
-      <div className="bg-black border border-red-900/30 rounded-xl overflow-hidden">
-        <div className="px-6 py-4 bg-slate-850 border-b border-red-900/30 flex items-center gap-2">
+      <div className="cyber-panel cyber-panel-red rounded-xl overflow-hidden">
+        <div className="px-6 py-4 cyber-panel border-b border-red-900/30 flex items-center gap-2">
           <ShieldAlert className="text-rose-400" size={18} />
-          <h3 className="text-white font-bold text-sm">STRIDE Threat Modeling Audit</h3>
+          <h3 className="text-white font-bold glow-text-white text-sm">STRIDE Threat Modeling Audit</h3>
         </div>
 
         <div className="overflow-x-auto">
@@ -88,8 +88,8 @@ export default function SecurityPanel({ securityData }: SecurityProps) {
             </thead>
             <tbody className="divide-y divide-slate-850 text-xs">
               {threats.map((t, i) => (
-                <tr key={i} className="hover:bg-slate-850/30 transition text-slate-300">
-                  <td className="px-6 py-4 font-bold text-red-400">{t.stride_category}</td>
+                <tr key={i} className="hover:cyber-panel/30 transition text-slate-300">
+                  <td className="px-6 py-4 font-bold text-red-500 glow-text-red">{t.stride_category}</td>
                   <td className="px-6 py-4 max-w-xs">
                     <p className="font-semibold text-slate-200">{t.threat}</p>
                     <p className="text-[10px] text-slate-500 mt-1">{t.impact}</p>
