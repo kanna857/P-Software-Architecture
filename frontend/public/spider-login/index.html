@@ -1130,8 +1130,9 @@ h1 {
 .intro-video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
+    background: #000;
     display: block;
     cursor: none;
     user-select: none;
@@ -1638,21 +1639,23 @@ window.addEventListener("DOMContentLoaded", () => {
         }, 500);
     }
 
-    if (introVideo) {
+    const videoSrc = introVideo ? (introVideo.getAttribute("src") || "").trim() : "";
+    if (introVideo && videoSrc) {
+        introVideo.addEventListener("error", proceedToTeaser);
+
+        // When video ends naturally → proceed (plays full video from start to finish)
+        introVideo.addEventListener("ended", proceedToTeaser);
+
         // Play video
         introVideo.play().catch(() => proceedToTeaser());
 
-        // When video ends naturally → go to teaser
-        introVideo.addEventListener("ended", proceedToTeaser);
-
-        // Safety: if video metadata loads, set a max-wait fallback
+        // Fail-safe timeout based on actual video duration (+ 3s buffer for buffering)
         introVideo.addEventListener("loadedmetadata", () => {
-            const maxMs = Math.round((introVideo.duration || 4) * 1000) + 400;
-            setTimeout(proceedToTeaser, maxMs);
+            if (introVideo.duration && isFinite(introVideo.duration)) {
+                const maxMs = Math.round(introVideo.duration * 1000) + 3000;
+                setTimeout(proceedToTeaser, maxMs);
+            }
         });
-
-        // Ultimate fallback in case video never loads at all
-        setTimeout(proceedToTeaser, 8000);
     } else {
         proceedToTeaser();
     }
