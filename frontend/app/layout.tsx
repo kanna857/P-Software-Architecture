@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Software Architect 2.0 — DeepMind Core",
-  description: "Design, simulate, and audit production-grade software architectures with multi-agent AI pipelines.",
-  keywords: ["AI architect", "multi-agent", "LangGraph", "software design", "architecture"],
+  title: "Spider-Architect 2.0 — Web-Slinger AI",
+  description: "With great power comes great software architecture. Build production-grade systems with multi-agent AI pipelines.",
+  keywords: ["AI architect", "spider-man", "multi-agent", "LangGraph", "software design"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -62,18 +62,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}</style>
       </head>
       <body className="min-h-full" style={{ fontFamily: "'Poppins', 'Inter', system-ui, sans-serif" }}>
-        {/* ── Layer 1-6: Cinematic Spider-Man Background ── */}
+        {/* ── Layer 1-7: Cinematic Spider-Man Background ── */}
         <div id="app-bg-city" />
         <div id="app-bg-overlay" />
         <div id="app-bg-grid" />
+        <div id="app-bg-spiderweb" />
         <div id="app-bg-rain" />
         <div id="app-bg-web" />
         <div id="app-bg-redlight" />
+        <div id="app-bg-miles" />
 
         {/* ── Spider-Man hanging figure — positioned at sidebar right edge ── */}
         <div style={{
           position: "fixed",
-          left: "190px",
+          left: "260px",
           top: 0,
           width: "220px",
           height: "100vh",
@@ -94,8 +96,36 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
 
+        {/* ── Spider ticker bar at very top ── */}
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "20px",
+          zIndex: 50,
+          background: "rgba(180,0,20,0.85)",
+          backdropFilter: "blur(8px)",
+          borderBottom: "1px solid rgba(255,23,56,0.5)",
+          display: "flex",
+          alignItems: "center",
+          overflow: "hidden",
+        }}>
+          <div className="spidey-ticker" style={{ flex: 1 }}>
+            <span className="spidey-ticker-inner" style={{
+              fontSize: "9px",
+              fontWeight: "800",
+              letterSpacing: "0.2em",
+              color: "rgba(255,255,255,0.9)",
+              fontFamily: "var(--font-heading)",
+            }}>
+              ⦸ WITH GREAT POWER COMES GREAT SOFTWARE ARCHITECTURE      ⦸ SPIDER-ARCHITECT 2.0 ONLINE      ⦸ MULTI-AGENT AI PIPELINE ACTIVE      ⦸ WEB-SLINGER CORE: OPERATIONAL      ⦸ DAILY BUGLE HEADLINE: AI GENERATES ENTIRE SYSTEM ARCHITECTURE IN SECONDS      ⦸ STARK INDUSTRIES PROTOCOLS ENGAGED      ⦸ FRIENDLY NEIGHBORHOOD ARCHITECT AT YOUR SERVICE
+            </span>
+          </div>
+        </div>
+
         {/* ── App Content (above all backgrounds) ── */}
-        <div style={{ position: "relative", zIndex: 10 }}>
+        <div style={{ position: "relative", zIndex: 10, paddingTop: "20px" }}>
           {children}
         </div>
       </body>

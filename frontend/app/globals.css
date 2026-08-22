@@ -56,37 +56,56 @@ html, body {
    CINEMATIC CITY BACKGROUND — same as login
    ============================================= */
 
-/* Layer 1: city background image — full vivid, matches login */
+/* Layer 1: Cinematic Spider-Man web-city background */
 #app-bg-city {
   position: fixed;
   inset: 0;
-  background: url('/bg.png') center center / cover no-repeat fixed;
+  background: url('/spidey_city_bg.png') center center / cover no-repeat fixed;
   z-index: 0;
   pointer-events: none;
+  filter: brightness(0.55) saturate(1.4) contrast(1.1);
 }
 
-/* Layer 2: VERY light cinematic overlay — same as login scene::before */
+/* Layer 2: Deep crimson neon bloom overlay */
 #app-bg-overlay {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 70% 30%, rgba(120, 0, 18, 0.55) 0%, transparent 55%),
-    radial-gradient(ellipse at 15% 80%, rgba(60, 0, 90, 0.35) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(2,2,5,0.38) 0%, rgba(2,2,5,0.52) 100%);
+    radial-gradient(ellipse at 50% 0%,   rgba(200, 0, 20, 0.55) 0%, transparent 50%),
+    radial-gradient(ellipse at 0%  50%,  rgba(140, 0, 10, 0.30) 0%, transparent 40%),
+    radial-gradient(ellipse at 100% 60%, rgba(100, 0, 5,  0.25) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(80,  0, 0,  0.40) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.70) 100%);
   z-index: 1;
   pointer-events: none;
 }
 
-/* Layer 3: Iron Spider nanotech grid — very subtle */
+
+/* Layer 3: Spider-suit hexagonal web grid */
 #app-bg-grid {
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px) 0 0 / 28px 28px,
-    linear-gradient(0deg, rgba(255,23,56,0.03) 1px, transparent 1px) 0 0 / 28px 28px;
+  background-image:
+    linear-gradient(90deg, rgba(255,23,56,0.06) 1px, transparent 1px),
+    linear-gradient(0deg,  rgba(255,23,56,0.06) 1px, transparent 1px),
+    linear-gradient(60deg, rgba(255,215,0,0.025) 1px, transparent 1px),
+    linear-gradient(120deg,rgba(255,215,0,0.025) 1px, transparent 1px);
+  background-size: 24px 24px, 24px 24px, 24px 24px, 24px 24px;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.9;
+}
+
+/* Layer 2b: Giant Spider-Web SVG background overlay */
+#app-bg-spiderweb {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg stroke='%23ff1738' stroke-width='0.8' fill='none'%3E%3Ccircle cx='200' cy='200' r='30'/%3E%3Ccircle cx='200' cy='200' r='70'/%3E%3Ccircle cx='200' cy='200' r='110'/%3E%3Ccircle cx='200' cy='200' r='150'/%3E%3Ccircle cx='200' cy='200' r='190'/%3E%3Cline x1='200' y1='10' x2='200' y2='390'/%3E%3Cline x1='10' y1='200' x2='390' y2='200'/%3E%3Cline x1='57' y1='57' x2='343' y2='343'/%3E%3Cline x1='343' y1='57' x2='57' y2='343'/%3E%3Cline x1='10' y1='131' x2='390' y2='269'/%3E%3Cline x1='10' y1='269' x2='390' y2='131'/%3E%3Cline x1='131' y1='10' x2='269' y2='390'/%3E%3Cline x1='269' y1='10' x2='131' y2='390'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 400px 400px;
+  animation: webSpin 60s linear infinite;
 }
 
 /* Layer 4: Animated rain (identical to login) */
@@ -110,6 +129,18 @@ html, body {
 @keyframes appRain {
   from { background-position: 0 0; }
   to   { background-position: 80px 120px; }
+}
+
+@keyframes webSpin {
+  from { background-position: 0 0; }
+  to   { background-position: 400px 400px; }
+}
+
+@keyframes webStrand {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { transform: translateX(200%); opacity: 0; }
 }
 
 /* Layer 5: Web corner (top-left, identical to login) */
@@ -177,50 +208,77 @@ html, body {
 /* =============================================
    CYBER PANELS — Iron Spider Glassmorphism
    ============================================= */
+/* =============================================
+   SUIT-TEXTURE INSPIRED GLASS PANELS
+   ============================================= */
 .cyber-panel {
   position: relative;
-  background: rgba(10, 0, 18, 0.82);
-  backdrop-filter: blur(22px) saturate(1.8);
-  -webkit-backdrop-filter: blur(22px) saturate(1.8);
-  border-radius: 12px;
+  background: rgba(6, 0, 12, 0.88);
+  backdrop-filter: blur(28px) saturate(2.0);
+  -webkit-backdrop-filter: blur(28px) saturate(2.0);
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   overflow: hidden;
 }
 
+/* Suit-texture shimmer on top edge */
 .cyber-panel::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 23, 56, 0.5), rgba(255, 215, 0, 0.3), transparent);
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(180, 0, 20, 0.6) 20%,
+    rgba(255, 215, 0, 0.9) 50%,
+    rgba(180, 0, 20, 0.6) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(255,215,0,0.4);
   pointer-events: none;
 }
 
-.cyber-panel-red {
-  border: 1px solid rgba(255, 215, 0, 0.35);
-  box-shadow:
-    0 0 0 1px rgba(255, 23, 56, 0.3),
-    inset 0 0 25px rgba(255, 23, 56, 0.12),
-    0 0 18px rgba(255, 23, 56, 0.18),
-    0 0 30px rgba(255, 215, 0, 0.12),
-    0 8px 32px rgba(0, 0, 0, 0.75);
+/* Hex mesh texture on panel interior (suit-inspired) */
+.cyber-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,23,56,1) 1px, transparent 0);
+  background-size: 12px 12px;
+  pointer-events: none;
+  border-radius: inherit;
 }
 
+.cyber-panel-red {
+  border: 1px solid rgba(255, 23, 56, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 215, 0, 0.15),
+    inset 0 0 40px rgba(180, 0, 20, 0.15),
+    0 0 25px rgba(255, 23, 56, 0.25),
+    0 0 50px rgba(255, 215, 0, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.85);
+}
+
+/* Suit-web bottom edge */
+.cyber-panel-red .panel-bottom-glow,
 .cyber-panel-red::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 23, 56, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 23, 56, 0.5), rgba(255,215,0,0.3), transparent);
   pointer-events: none;
 }
 
 .cyber-panel-blue {
-  border: 1px solid rgba(0, 200, 240, 0.3);
+  border: 1px solid rgba(0, 180, 220, 0.35);
   box-shadow:
-    inset 0 0 20px rgba(0, 200, 240, 0.06),
-    0 0 14px rgba(0, 200, 240, 0.1),
-    0 4px 20px rgba(0, 0, 0, 0.6);
+    inset 0 0 30px rgba(0, 200, 240, 0.08),
+    0 0 18px rgba(0, 200, 240, 0.15),
+    0 6px 24px rgba(0, 0, 0, 0.7);
 }
 
 /* Iron Spider Armored Corner Brackets */
@@ -526,3 +584,199 @@ html, body {
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(255, 23, 56, 0.2);
 }
+
+/* Layer 7: Giant Miles Morales Spider-Man in background */
+#app-bg-miles {
+  position: fixed;
+  right: 14%;
+  top: -8%;
+  width: 50vw;
+  height: 55vh;
+  background: url('/spider-login/miles_leap_cutout.png') no-repeat center center / contain;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 2; /* above city skyline, behind content cards */
+  filter: drop-shadow(0 0 25px rgba(255, 23, 56, 0.4));
+  transform: rotate(-3deg);
+}
+
+/* =============================================
+   DYNAMIC ANIMATIONS & NEON GLOW EFFECTS (OPTIMIZED)
+   ============================================= */
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes subtleOpacityPulse {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-badge-glow {
+  animation: subtleOpacityPulse 3s ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* Card hover animation enhancements */
+.cyber-card-hover {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.cyber-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 30, 70, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 23, 56, 0.3) !important;
+}
+
+/* =============================================
+   SPIDER-MAN WEB DECORATIONS
+   ============================================= */
+
+/* Animated web strand that sweeps across panels */
+.web-strand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), rgba(255,23,56,0.5), transparent);
+  animation: webStrand 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+.web-strand:nth-child(2) { animation-delay: 2s; top: 30%; }
+.web-strand:nth-child(3) { animation-delay: 4s; top: 65%; }
+
+/* Spider-Sense pulse ring */
+.spider-sense {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.spider-sense::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 23, 56, 0.6);
+  animation: spiderSensePulse 2s ease-out infinite;
+}
+.spider-sense::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 23, 56, 0.3);
+  animation: spiderSensePulse 2s ease-out infinite 0.4s;
+}
+@keyframes spiderSensePulse {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* Web corner decoration */
+.web-corner-tl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg stroke='%23ff1738' stroke-width='0.8' fill='none'%3E%3Cpath d='M0 0 L60 60'/%3E%3Cpath d='M0 0 L0 60'/%3E%3Cpath d='M0 0 L60 0'/%3E%3Ccircle cx='0' cy='0' r='20'/%3E%3Ccircle cx='0' cy='0' r='40'/%3E%3Ccircle cx='0' cy='0' r='60'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.web-corner-tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  opacity: 0.18;
+  transform: scaleX(-1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg stroke='%23ff1738' stroke-width='0.8' fill='none'%3E%3Cpath d='M0 0 L60 60'/%3E%3Cpath d='M0 0 L0 60'/%3E%3Cpath d='M0 0 L60 0'/%3E%3Ccircle cx='0' cy='0' r='20'/%3E%3Ccircle cx='0' cy='0' r='40'/%3E%3Ccircle cx='0' cy='0' r='60'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Spinning web emblem */
+.web-emblem-spin {
+  animation: webEmblemSpin 20s linear infinite;
+}
+@keyframes webEmblemSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Spidey quote ticker */
+@keyframes tickerScroll {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.spidey-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.spidey-ticker-inner {
+  display: inline-block;
+  animation: tickerScroll 25s linear infinite;
+}
+
+/* Web-shot button effect */
+.web-shot-btn {
+  position: relative;
+  overflow: hidden;
+}
+.web-shot-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+.web-shot-btn:hover::after {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+}
+
+/* Red neon border glow flicker */
+@keyframes neonFlicker {
+  0%, 95%, 100% { opacity: 1; }
+  96%           { opacity: 0.4; }
+  97%           { opacity: 1; }
+  98%           { opacity: 0.6; }
+  99%           { opacity: 1; }
+}
+.neon-flicker {
+  animation: neonFlicker 8s ease-in-out infinite;
+}
+
+/* Hide Next.js Dev Tools Indicator portal button */
+[data-nextjs-toast],
+[data-nextjs-toast-wrapper],
+[data-nextjs-dialog-overlay],
+nextjs-portal {
+  display: none !important;
+}
+
+
+
+

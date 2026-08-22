@@ -1917,7 +1917,8 @@ form.addEventListener("submit", async (event) => {
     }
 
     try {
-        const response = await fetch("http://localhost:8000/api/login", {
+        // Use Next.js API route so cookie is set server-side (fixes iframe SameSite issue)
+        const response = await fetch("/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1932,11 +1933,6 @@ form.addEventListener("submit", async (event) => {
             alert("Invalid credentials");
             return;
         }
-
-        const data = await response.json();
-        
-        // Set cookie so Next.js middleware can read it
-        document.cookie = `auth_token=${data.token}; path=/; max-age=86400; SameSite=Strict`;
         
     } catch (error) {
         console.error("Login failed:", error);

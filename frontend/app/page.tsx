@@ -465,43 +465,90 @@ export default function Home() {
           {/* ===== LEFT: Hero + Projects ===== */}
           <div className="flex flex-col flex-1 min-w-0 overflow-y-auto pr-1 gap-5" style={{ scrollbarWidth: "none" }}>
 
-            {/* HERO SECTION */}
-            <div className="flex-shrink-0">
+            {/* HERO SECTION — actual suit texture background */}
+            <div
+              className="flex-shrink-0 rounded-xl p-4 relative overflow-hidden"
+              style={{
+                backgroundImage: "url('/spidey_suit_texture.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center top",
+                border: "1px solid rgba(255,23,56,0.5)",
+                boxShadow: "0 0 0 1px rgba(255,215,0,0.2), 0 0 40px rgba(255,23,56,0.2), 0 16px 48px rgba(0,0,0,0.9)"
+              }}
+            >
+              {/* Dark overlay so text is readable, but suit shows through */}
+              <div style={{
+                position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
+                background: "linear-gradient(135deg, rgba(10,0,5,0.88) 0%, rgba(4,0,10,0.82) 60%, rgba(20,0,2,0.90) 100%)",
+                zIndex: 0
+              }}/>
+              {/* Extra subtle red vignette on edges */}
+              <div style={{
+                position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
+                background: "radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 100%)",
+                zIndex: 0
+              }}/>
+              {/* Web lines overlay — top left corner */}
+              <svg style={{ position: "absolute", top: 0, left: 0, width: "180px", height: "180px", opacity: 0.12, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 180 180">
+                <line x1="0" y1="0" x2="180" y2="180" stroke="#ff1738" strokeWidth="0.8"/>
+                <line x1="0" y1="0" x2="0" y2="180" stroke="#ff1738" strokeWidth="0.8"/>
+                <line x1="0" y1="0" x2="180" y2="0" stroke="#ff1738" strokeWidth="0.8"/>
+                <circle cx="0" cy="0" r="50" fill="none" stroke="#ff1738" strokeWidth="0.8"/>
+                <circle cx="0" cy="0" r="100" fill="none" stroke="#ff1738" strokeWidth="0.6"/>
+                <circle cx="0" cy="0" r="150" fill="none" stroke="#ff1738" strokeWidth="0.5"/>
+                <line x1="0" y1="0" x2="90" y2="180" stroke="#ff1738" strokeWidth="0.5"/>
+                <line x1="0" y1="0" x2="180" y2="90" stroke="#ff1738" strokeWidth="0.5"/>
+              </svg>
+              {/* Gold corner brackets */}
+              <div style={{ position: "absolute", top: 6, left: 6, width: 18, height: 18, borderTop: "2px solid rgba(255,215,0,0.9)", borderLeft: "2px solid rgba(255,215,0,0.9)", borderRadius: "2px 0 0 0", zIndex: 2 }}/>
+              <div style={{ position: "absolute", top: 6, right: 6, width: 18, height: 18, borderTop: "2px solid rgba(255,215,0,0.9)", borderRight: "2px solid rgba(255,215,0,0.9)", borderRadius: "0 2px 0 0", zIndex: 2 }}/>
+              <div style={{ position: "absolute", bottom: 6, left: 6, width: 18, height: 18, borderBottom: "2px solid rgba(255,215,0,0.9)", borderLeft: "2px solid rgba(255,215,0,0.9)", borderRadius: "0 0 0 2px", zIndex: 2 }}/>
+              <div style={{ position: "absolute", bottom: 6, right: 6, width: 18, height: 18, borderBottom: "2px solid rgba(255,215,0,0.9)", borderRight: "2px solid rgba(255,215,0,0.9)", borderRadius: "0 0 2px 0", zIndex: 2 }}/>
+              {/* Laser scan line */}
+              <div className="panel-laser" style={{ zIndex: 2 }}/>
+              <div style={{ position: "relative", zIndex: 3 }}>
               {/* Tags */}
-              <div className="flex items-center gap-3 mb-3">
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+              <div className="flex items-center gap-3 mb-2">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full animate-badge-glow"
                   style={{ background: "rgba(255,0,40,0.15)", color: "#ff2050", border: "1px solid rgba(255,0,40,0.35)" }}>
-                  MULTI-AGENT AI
+                  🕷 WEB-SLINGER AI
                 </span>
                 <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono tracking-wider">
-                  <Layers size={10} className="opacity-60"/> LangGraph Orchestration
+                  <Layers size={10} className="opacity-60 animate-pulse"/> LangGraph Orchestration
+                </span>
+                <span className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider" style={{ color: "#ffd700" }}>
+                  <Zap size={10} className="opacity-80"/> Stark Protocol v2.0
                 </span>
               </div>
 
               {/* Main Title */}
-              <h1 className="text-5xl font-extrabold tracking-tight leading-none mb-3 title-gradient" style={{ fontFamily: "var(--font-heading)", lineHeight: "1.05" }}>
-                AI Software Architect 2.0
+              <h1 className="text-xl font-extrabold tracking-tight leading-tight mb-0.5 title-gradient neon-flicker" style={{ fontFamily: "var(--font-heading)" }}>
+                Spider-Architect 2.0
               </h1>
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase mb-1.5" style={{ color: "#ffd700", textShadow: "0 0 8px rgba(255,215,0,0.5)" }}>
+                ✦ Friendly Neighborhood Software Architect ✦
+              </p>
 
-              <p className="text-sm text-slate-400 max-w-lg mb-5 leading-relaxed">
-                Design, audit, and simulate production-grade systems with specialized AI agents. Requirements, databases, APIs, security — generated in seconds.
+              <p className="text-xs text-slate-400 max-w-lg mb-3 leading-relaxed">
+                <span style={{ color: "#ff5070" }}>&ldquo;With great power comes great software architecture.&rdquo;</span> Design, audit, and simulate production-grade systems with specialized Spider-Agents. Requirements, databases, APIs, security &mdash; web-slinging at lightspeed.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => setCurrentView("new-architecture")}
-                  className="cyber-btn flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-md"
+                  className="cyber-btn web-shot-btn flex items-center gap-2 px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md hover:scale-105 transition-transform"
                 >
-                  <PlusCircle size={13}/> New Architecture
+                  <PlusCircle size={13}/> Shoot New Web
                 </button>
                 <button
                   onClick={handleLaunchDemo}
-                  className="cyber-btn cyber-btn-outline flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-md"
+                  className="cyber-btn cyber-btn-outline web-shot-btn flex items-center gap-2 px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md hover:scale-105 transition-transform"
                   style={{ color: "#aabbcc" }}
                 >
-                  <Terminal size={13}/> E-Commerce Demo
+                  <Terminal size={13}/> Daily Bugle Demo
                 </button>
+              </div>
               </div>
             </div>
 
@@ -509,54 +556,70 @@ export default function Home() {
             <div className="flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Activity size={14} style={{ color: "#ff2050" }}/>
-                  <h2 className="text-sm font-bold text-white uppercase tracking-wider">Current Software Projects</h2>
+                  <div className="spider-sense">
+                    <Activity size={14} style={{ color: "#ff2050" }} className="animate-pulse" />
+                  </div>
+                  <h2 className="text-sm font-bold text-white uppercase tracking-wider">🕸 Active Web Missions</h2>
                 </div>
               </div>
 
               <div className="space-y-2.5">
                 {displayProjects.map((proj: any, i: number) => {
-                  const isActive = proj.status === "Active";
+                    const isActive = proj.status === "Active" || !proj.status;
+                    const statusLabel = proj.status || "Active";
+                    const tagList = proj.tags || ["Architecture", "API", "Security"];
+                    const projectTags: Record<string, string[]> = {
+                      "E-Commerce Platform":   ["Architecture", "Database", "API", "Security", "Deployment"],
+                      "Real-time Analytics":   ["Data", "Stream", "AI", "Scalability", "Monitoring"],
+                      "Customer Support AI":   ["Agents", "RAG", "LLM", "Security", "Integration"],
+                      "DevOps Automation":     ["CI/CD", "Kubernetes", "Monitoring", "Security", "Automation"],
+                    };
+                    const displayTags = tagList.length > 0 && tagList[0] !== "Architecture" ? tagList
+                      : (projectTags[proj.name] || tagList);
                   return (
                     <div
                       key={i}
                       onClick={() => proj.id && handleSelectProject(proj.id)}
-                      className="cyber-panel cyber-panel-red flex items-center gap-4 p-3.5 rounded-lg cursor-pointer group transition-all duration-200"
+                      className="cyber-panel cyber-panel-red cyber-card-hover flex items-center gap-4 p-3.5 rounded-lg cursor-pointer group"
                       style={{
-                        background: "rgba(8, 0, 15, 0.7)",
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.5)",
-                      }}
-                      onMouseEnter={e => {
-                        (e.currentTarget as HTMLElement).style.background = "rgba(12, 0, 22, 0.85)";
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(220, 0, 50, 0.5)";
-                      }}
-                      onMouseLeave={e => {
-                        (e.currentTarget as HTMLElement).style.background = "rgba(8, 0, 15, 0.7)";
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(200, 0, 50, 0.35)";
+                        background: "rgba(6, 0, 12, 0.60)",
+                        backdropFilter: "blur(12px)",
+                        boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
                       }}
                     >
-                      {/* Project Icon */}
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 overflow-hidden relative"
-                        style={{ background: `rgba(${i % 2 === 0 ? "180,0,30" : "0,80,120"},0.2)`, border: `1px solid rgba(${i % 2 === 0 ? "200,0,40" : "0,150,200"},0.3)` }}>
-                        {i % 2 === 0
-                          ? <Bug size={22} style={{ color: "#ff1030", filter: "drop-shadow(0 0 6px rgba(255,16,48,0.6))" }} />
-                          : <Layers size={20} style={{ color: "#00b0d0", filter: "drop-shadow(0 0 6px rgba(0,176,208,0.6))" }} />
-                        }
+                      {/* Project Icon — matches reference skyline and spider icons */}
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-105 transition-transform duration-200"
+                        style={{
+                          background: "rgba(5,0,10,0.4)",
+                          border: "1px solid rgba(255,215,0,0.25)"
+                        }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={
+                            i === 0 ? "/spider-login/hero_icon_iron.png" :
+                            i === 1 ? "/spider-login/multiverse_intro.jpg" :
+                            i === 2 ? "/spider-login/hero_icon_iron.png" :
+                            "/spider-login/spider_emblem.png"
+                          }
+                          alt="Project Avatar"
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
                       </div>
 
                       {/* Project Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2.5 mb-1">
-                          <h3 className="text-sm font-bold text-white truncate">{proj.name}</h3>
+                          <h3 className="text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">{proj.name}</h3>
                           <span className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${isActive ? "badge-active" : "badge-running"}`}>
                             <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-green-400" : "bg-cyan-400"} animate-pulse`}/>
-                            {proj.status}
+                            {statusLabel}
                           </span>
                         </div>
                         <p className="text-[11px] text-slate-500 truncate mb-2">{proj.description || proj.desc}</p>
                         <div className="flex flex-wrap gap-1">
-                          {(proj.tags || ["Architecture", "API", "Security"]).map((tag: string, ti: number) => (
-                            <span key={ti} className="tag-pill">{tag}</span>
+                          {displayTags.map((tag: string, ti: number) => (
+                            <span key={ti} className="tag-pill hover:border-red-500/50 transition-colors">{tag}</span>
                           ))}
                         </div>
                       </div>
@@ -573,10 +636,30 @@ export default function Home() {
                         <span className="text-xs font-semibold text-slate-300 font-mono">{proj.ver || proj.version || "v1.0"}</span>
                       </div>
 
-                      {/* Arrow */}
-                      <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200"
-                        style={{ background: "rgba(200,0,40,0.15)", border: "1px solid rgba(200,0,40,0.3)" }}>
-                        <ArrowRight size={13} style={{ color: "#ff2050" }} />
+                      {/* Actions: Arrow & Delete */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        {/* Delete Button */}
+                        <button
+                          onClick={(e) => {
+                            if (proj.id) {
+                              handleDeleteProject(proj.id, e);
+                            } else {
+                              e.stopPropagation();
+                              setProjects(prev => prev.filter((_, idx) => idx !== i));
+                            }
+                          }}
+                          className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 hover:bg-red-600/40 hover:scale-110 group/del"
+                          style={{ background: "rgba(255, 0, 40, 0.12)", border: "1px solid rgba(255, 0, 40, 0.3)" }}
+                          title="Delete project"
+                        >
+                          <Trash2 size={13} className="text-red-400 group-hover/del:text-red-200 transition-colors" />
+                        </button>
+
+                        {/* Arrow View Details */}
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 group-hover:translate-x-1 group-hover:bg-red-600/30"
+                          style={{ background: "rgba(200,0,40,0.15)", border: "1px solid rgba(200,0,40,0.3)" }}>
+                          <ArrowRight size={13} style={{ color: "#ff2050" }} />
+                        </div>
                       </div>
                     </div>
                   );
@@ -586,24 +669,34 @@ export default function Home() {
           </div>
 
           {/* ===== RIGHT: Metrics Panel ===== */}
-          <div className="flex flex-col gap-3 shrink-0 overflow-y-auto" style={{ width: "280px", scrollbarWidth: "none" }}>
+          <div className="flex flex-col gap-3 shrink-0 overflow-y-auto relative" style={{ width: "310px", scrollbarWidth: "none" }}>
 
-            {/* Backend Connected */}
-            <div className="flex justify-end">
-              <span className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-                style={{ background: "rgba(0,180,60,0.08)", color: "#00c040", border: "1px solid rgba(0,180,60,0.2)" }}>
-                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse-green"/>
-                Backend Connected
-              </span>
+            {/* HUD Emblem watermark background */}
+            <div style={{
+              position: "absolute",
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "260px", height: "260px",
+              opacity: 0.06,
+              pointerEvents: "none",
+              zIndex: 0,
+              borderRadius: "50%",
+              overflow: "hidden"
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/spidey_hud_emblem.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
             </div>
 
             {/* TOP STATS 2x2 */}
             <div className="grid grid-cols-2 gap-2.5">
               {/* Active Projects */}
-              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                className="cyber-panel cyber-panel-red p-3.5 rounded-lg transition-all duration-200" style={{ background: "rgba(6,0,12,0.8)" }}
+              >
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Layers size={11} style={{ color: "#ff2050" }}/>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Active Projects</span>
+                  <Layers size={11} style={{ color: "#ff2050" }} className="animate-pulse" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Web Missions</span>
                 </div>
                 <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>
                   {projects.length || 8}
@@ -611,30 +704,36 @@ export default function Home() {
                 <div className="text-[9px] text-slate-600">+2 this week</div>
                 <div className="mt-2 h-6 flex items-end gap-px">
                   {[3,5,2,7,4,6,8].map((v,i) => (
-                    <div key={i} className="flex-1 rounded-sm" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
+                    <div key={i} className="flex-1 rounded-sm transition-all duration-300 hover:bg-red-500" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Agent Specialists */}
-              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                className="cyber-panel cyber-panel-red p-3.5 rounded-lg transition-all duration-200" style={{ background: "rgba(6,0,12,0.8)" }}
+              >
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Cpu size={11} style={{ color: "#ff2050" }}/>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Agent Specialists</span>
+                  <Cpu size={11} style={{ color: "#ff2050" }} className="animate-pulse" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Spider-Agents</span>
                 </div>
                 <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>12</div>
-                <div className="text-[9px] text-green-500 font-bold">Online</div>
+                <div className="text-[9px] text-green-500 font-bold">Web-Slingers Online</div>
                 <div className="mt-2 h-6 flex items-end gap-px">
                   {[6,4,8,3,7,5,9].map((v,i) => (
-                    <div key={i} className="flex-1 rounded-sm" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
+                    <div key={i} className="flex-1 rounded-sm transition-all duration-300 hover:bg-red-500" style={{ height: `${v * 10}%`, background: i === 6 ? "#ff2050" : "rgba(255,32,80,0.25)" }}/>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Avg Readiness */}
-              <div className="cyber-panel cyber-panel-blue p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                className="cyber-panel cyber-panel-blue p-3.5 rounded-lg transition-all duration-200" style={{ background: "rgba(6,0,12,0.8)" }}
+              >
                 <div className="flex items-center gap-1.5 mb-2">
-                  <TrendingUp size={11} style={{ color: "#00c0e0" }}/>
+                  <TrendingUp size={11} style={{ color: "#00c0e0" }} className="animate-pulse" />
                   <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Avg Readiness</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -649,58 +748,39 @@ export default function Home() {
                   </svg>
                 </div>
                 <div className="text-[9px] text-slate-600 mt-1">↑ 12% from last run</div>
-              </div>
+              </motion.div>
 
               {/* RAG Collections */}
-              <div className="cyber-panel cyber-panel-red p-3.5 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
+              <motion.div
+                whileHover={{ y: -2, scale: 1.02 }}
+                className="cyber-panel cyber-panel-red p-3.5 rounded-lg transition-all duration-200" style={{ background: "rgba(6,0,12,0.8)" }}
+              >
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Database size={11} style={{ color: "#ff2050" }}/>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">RAG Collections</span>
+                  <Database size={11} style={{ color: "#ff2050" }} className="animate-pulse" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Web Archives</span>
                 </div>
                 <div className="text-3xl font-extrabold font-mono mb-0.5" style={{ color: "#ff2050", textShadow: "0 0 12px rgba(255,32,80,0.5)" }}>
                   11 <span className="text-base text-slate-500 font-medium">Core</span>
                 </div>
                 <div className="text-[9px] text-slate-600">Updated</div>
                 <Database size={28} className="mt-1 ml-auto opacity-10" style={{ color: "#ff2050" }}/>
-              </div>
-            </div>
-
-            {/* SYSTEM HEALTH */}
-            <div className="cyber-panel cyber-panel-red p-4 rounded-lg" style={{ background: "rgba(6,0,12,0.8)" }}>
-              <div className="flex items-center gap-2 mb-3">
-                <Activity size={13} style={{ color: "#ff2050" }}/>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">System Health</h3>
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { label: "CPU", val: 34, color: "#00c0e0" },
-                  { label: "Memory", val: 62, color: "#ff2050" },
-                  { label: "Storage", val: 48, color: "#00c0e0" },
-                  { label: "Network", val: 21, color: "#ff2050" },
-                ].map((g, i) => (
-                  <div key={i} className="flex flex-col items-center gap-1.5">
-                    <div className="relative w-14 h-14">
-                      <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-                        <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3"/>
-                        <circle cx="18" cy="18" r="14" fill="none" stroke={g.color} strokeWidth="3"
-                          strokeDasharray={`${g.val} 100`} strokeLinecap="round"
-                          style={{ filter: `drop-shadow(0 0 3px ${g.color})` }}/>
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-[10px] font-bold text-white">{g.val}%</span>
-                      </div>
-                    </div>
-                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{g.label}</span>
-                  </div>
-                ))}
-              </div>
+              </motion.div>
             </div>
 
             {/* RECENT ACTIVITY */}
-            <div className="cyber-panel cyber-panel-red p-4 rounded-lg flex-1" style={{ background: "rgba(6,0,12,0.8)" }}>
+            <div className="cyber-panel cyber-panel-red p-4 rounded-lg flex-1 relative overflow-hidden"
+              style={{
+                backgroundImage: "url('/spidey_suit_texture.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
+              }}
+            >
+              {/* Dark overlay */}
+              <div style={{ position: "absolute", inset: 0, background: "rgba(3,0,8,0.88)", borderRadius: "inherit", zIndex: 0 }}/>
+              <div style={{ position: "relative", zIndex: 1 }}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Clock size={13} style={{ color: "#ff2050" }}/>
+                  <Clock size={13} style={{ color: "#ff2050" }} className="animate-pulse" />
                   <h3 className="text-xs font-bold text-white uppercase tracking-wider">Recent Activity</h3>
                 </div>
                 <span className="text-[9px] font-bold uppercase tracking-widest cursor-pointer hover:text-white transition-colors" style={{ color: "#00a0c0" }}>
@@ -715,7 +795,11 @@ export default function Home() {
                   { action: "Database synced",        sub: "Knowledge Base",       time: "1d ago",  IconC: Database,      color: "#c07020" },
                   { action: "Agent run completed",    sub: "Cost Analysis",        time: "1d ago",  IconC: CheckCircle2,  color: "#00c050" },
                 ].map((act, i) => (
-                  <div key={i} className="flex items-center gap-3">
+                  <motion.div
+                    key={i}
+                    whileHover={{ x: 3, transition: { duration: 0.15 } }}
+                    className="flex items-center gap-3 p-1 rounded-md transition-colors hover:bg-white/5 cursor-pointer"
+                  >
                     <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
                       style={{ background: `${act.color}18`, border: `1px solid ${act.color}40` }}>
                       <act.IconC size={11} style={{ color: act.color }}/>
@@ -725,26 +809,13 @@ export default function Home() {
                       <p className="text-[10px] text-slate-600 truncate">{act.sub}</p>
                     </div>
                     <span className="text-[9px] text-slate-600 font-mono shrink-0">{act.time}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
-
-        {/* BOTTOM BUILD BAR */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center py-2 pointer-events-none"
-          style={{ background: "linear-gradient(0deg, rgba(4,0,8,0.9) 0%, transparent 100%)" }}>
-          <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.35em] text-slate-600">
-            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">BUILD</span>
-            <span style={{ color: "#660020" }}>+</span>
-            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">DEPLOY</span>
-            <Bug size={18} style={{ color: "#cc0030", filter: "drop-shadow(0 0 8px rgba(200,0,48,0.8))" }}/>
-            <span style={{ color: "#660020" }}>+</span>
-            <span className="hover:text-red-500 transition-colors cursor-pointer pointer-events-auto">DOMINATE</span>
-          </div>
-        </div>
+      </div>
 
       </motion.div>
     );
@@ -1516,87 +1587,72 @@ export default function Home() {
   };
 
   return (
-    <div className="flex text-slate-100 h-screen overflow-hidden" style={{ background: "transparent", position: "relative", zIndex: 1 }}>
-      {/* Sidebar navigation */}
-      <Sidebar 
-        currentView={currentView} 
-        onViewChange={(view) => {
-          if (view === "dashboard" || view === "new-architecture" || view === "knowledge" || view === "integrations" || view === "observability" || view === "settings") {
-            setCurrentView(view);
-            setSelectedProjectId(null);
-            setSelectedArchId(null);
-            setArchitectureData(null);
-          } else if (view === "projects") {
-            setCurrentView("dashboard");
-          } else if (selectedProjectId) {
-            if (view === "architectures") setActiveProjectTab("diagrams");
-            if (view === "versions") setActiveProjectTab("versions");
-            if (view === "agent-runs") setActiveProjectTab("pipeline");
-            if (view === "cost-analysis") setActiveProjectTab("cost");
-            if (view === "scale-simulation") setActiveProjectTab("scale");
-            if (view === "security") setActiveProjectTab("security");
-          } else {
-            alert("Please select or create an active project context to view specific metrics.");
-          }
-        }} 
-        selectedProjectName={selectedProjectId ? projects.find(p => p.id === selectedProjectId)?.name : undefined}
-      />
+    <div className="flex flex-col text-slate-100 h-screen overflow-hidden" style={{ background: "transparent", position: "relative", zIndex: 1 }}>
+      {/* ── Middle container (Sidebar + Content Workspace) ── */}
+      <div className="flex-1 flex overflow-hidden relative z-10">
+        {/* Sidebar navigation */}
+        <Sidebar 
+          currentView={currentView} 
+          onViewChange={(view) => {
+            if (view === "dashboard" || view === "new-architecture" || view === "knowledge" || view === "integrations" || view === "observability" || view === "settings") {
+              setCurrentView(view);
+              setSelectedProjectId(null);
+              setSelectedArchId(null);
+              setArchitectureData(null);
+            } else if (view === "projects") {
+              setCurrentView("dashboard");
+            } else if (selectedProjectId) {
+              if (view === "architectures") setActiveProjectTab("diagrams");
+              if (view === "versions") setActiveProjectTab("versions");
+              if (view === "agent-runs") setActiveProjectTab("pipeline");
+              if (view === "cost-analysis") setActiveProjectTab("cost");
+              if (view === "scale-simulation") setActiveProjectTab("scale");
+              if (view === "security") setActiveProjectTab("security");
+            } else {
+              alert("Please select or create an active project context to view specific metrics.");
+            }
+          }} 
+          selectedProjectName={selectedProjectId ? projects.find(p => p.id === selectedProjectId)?.name : undefined}
+          hideBrand={false}
+        />
 
-      {/* Main content area */}
-      <main className="flex-1 flex flex-col overflow-hidden relative z-10">
-        {/* Top Breadcrumb Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between px-6 py-3 shrink-0"
-          style={{ borderBottom: "1px solid rgba(180,0,40,0.2)", background: "rgba(4,0,10,0.6)", backdropFilter: "blur(10px)" }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#4a4a5a" }}>Console</span>
-            <span style={{ color: "#2a2a3a" }}>/</span>
-            <motion.span
-              key={currentView}
-              initial={{ opacity: 0, x: 6 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-[11px] font-bold uppercase tracking-widest"
-              style={{ color: "#ff2050" }}
-            >
-              {currentView.includes("project-") ? "Project Workspace" : currentView.replace(/-/g, " ")}
-            </motion.span>
+        {/* Content workspace area */}
+        <main className="flex-1 flex flex-col overflow-hidden relative z-10">
+          {/* Sub Header / Breadcrumb inside main content */}
+          <div className="flex items-center justify-between px-6 py-2.5 shrink-0 border-b border-red-950/20"
+            style={{ background: "rgba(2,0,5,0.25)", backdropFilter: "blur(4px)" }}>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Console</span>
+              <span className="text-slate-700">/</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-red-500 glow-text-red">
+                {currentView.includes("project-") ? "Project Workspace" : currentView.replace(/-/g, " ")}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <motion.span
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: "#00c040", boxShadow: "0 0 6px #00c040" }}
-            />
-            <span className="text-[10px] font-mono" style={{ color: "#3a4a3a" }}>Backend connected</span>
-          </div>
-        </motion.header>
 
-        {/* Page Content */}
-        <div className="flex-1 overflow-hidden px-6 py-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentView}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="h-full"
-            >
-              {currentView === "dashboard" && renderDashboard()}
-              {currentView === "new-architecture" && renderNewArchitecture()}
-              {currentView.startsWith("project-") && renderProjectWorkspace()}
-              {currentView === "knowledge" && renderKnowledgeBase()}
-              {currentView === "integrations" && renderIntegrations()}
-              {currentView === "observability" && renderObservability()}
-              {currentView === "settings" && renderSettings()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </main>
+          {/* Page Content */}
+          <div className="flex-1 overflow-hidden px-6 py-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentView}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="h-full"
+              >
+                {currentView === "dashboard" && renderDashboard()}
+                {currentView === "new-architecture" && renderNewArchitecture()}
+                {currentView.startsWith("project-") && renderProjectWorkspace()}
+                {currentView === "knowledge" && renderKnowledgeBase()}
+                {currentView === "integrations" && renderIntegrations()}
+                {currentView === "observability" && renderObservability()}
+                {currentView === "settings" && renderSettings()}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
